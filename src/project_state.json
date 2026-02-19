@@ -1,0 +1,307 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Interior design project management system called 'Shop List' - a production-ready ERP/BI SaaS for interior designers and architects to manage projects, clients, shopping lists, budgets, and workflows in one integrated platform",
+  "architectural_notes": [
+    "Microservices-ready monolith architecture (modular monorepo)",
+    "Backend: Python 3.11 + FastAPI + SQLAlchemy + Alembic + PostgreSQL + Celery + Redis",
+    "Frontend: React + TypeScript + Vite + TailwindCSS + Axios + Chart.js",
+    "Clean layered architecture: routers, services, repositories, models, schemas",
+    "Docker-based deployment with docker-compose (backend, frontend, postgres, redis containers)",
+    "JWT authentication with role-based access control",
+    "REST API with OpenAPI/Swagger documentation",
+    "PDF generation using ReportLab or WeasyPrint",
+    "Multi-tenant SaaS foundation with low operational overhead",
+    "Normalized database schema with foreign keys, indexes, and soft deletes"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-build-project-dashboard-displaying-comprehensive-project-overview-including-client-data-timeline-budget-status-room-breakdown-and-material-specifications",
+      "title": "Build project dashboard displaying comprehensive project overview including client data, timeline, budget status, room breakdown, and material specifications",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-shopping-list-interface-with-product-cards-showing-image-name-price-shop-link-quantity-status-and-category-with-ability-to-add-edit-and-remove-items",
+      "title": "Create shopping list interface with product cards showing image, name, price, shop, link, quantity, status, and category with ability to add, edit, and remove items",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-room-management-interface-where-rooms-can-be-added-to-projects-edited-and-have-products-and-costs-assigned-to-them-with-per-room-budget-display",
+      "title": "Implement room management interface where rooms can be added to projects, edited, and have products and costs assigned to them with per-room budget display",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-budget-overview-page-with-automatic-calculations-showing-total-project-cost-per-room-breakdown-per-category-breakdown-furniture-lighting-materials-appliances-decorations-and-visual-indicators-for-budget-overages",
+      "title": "Build budget overview page with automatic calculations showing total project cost, per-room breakdown, per-category breakdown (furniture, lighting, materials, appliances, decorations), and visual indicators for budget overages",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-task-management-interface-displaying-project-tasks-with-deadlines-statuses-and-notes-allowing-users-to-add-update-status-and-complete-tasks",
+      "title": "Create task management interface displaying project tasks with deadlines, statuses, and notes, allowing users to add, update status, and complete tasks",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-client-portal-view-with-read-only-access-to-shared-project-elements-where-clients-can-view-moodboards-product-lists-budget-summaries-and-leave-comments-without-editing",
+      "title": "Implement client portal view with read-only access to shared project elements where clients can view moodboards, product lists, budget summaries, and leave comments without editing",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-moodboard-creation-and-viewing-interface-where-users-can-assemble-inspiration-boards-with-items-linked-to-actual-shopping-list-products-showing-real-time-budget-impact",
+      "title": "Build moodboard creation and viewing interface where users can assemble inspiration boards with items linked to actual shopping list products, showing real-time budget impact",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-logistics-tracking-view-showing-product-order-status-pipeline-from-planned-through-ordered-in-transit-delivered-to-installed-with-ability-to-update-status-and-view-which-items-need-attention",
+      "title": "Create logistics tracking view showing product order status pipeline from planned through ordered, in transit, delivered, to installed with ability to update status and view which items need attention",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-client-management-interface-for-crm-module-with-list-of-clients-detail-view-showing-contact-information-project-associations-contact-history-and-notes",
+      "title": "Implement client management interface for CRM module with list of clients, detail view showing contact information, project associations, contact history, and notes",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-product-library-interface-for-managing-reusable-products-where-users-can-add-frequently-used-items-with-all-details-and-quickly-copy-them-to-project-shopping-lists",
+      "title": "Build product library interface for managing reusable products where users can add frequently used items with all details and quickly copy them to project shopping lists",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-authentication-pages-for-registration-and-login-with-form-validation-and-error-handling",
+      "title": "Create authentication pages for registration and login with form validation and error handling",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-project-list-view-showing-all-projects-with-key-information-name-client-budget-status-deadline-and-ability-to-create-new-projects-and-navigate-to-project-details",
+      "title": "Implement project list view showing all projects with key information (name, client, budget status, deadline) and ability to create new projects and navigate to project details",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-design-a-minimalist-professional-visual-theme-with-neutral-colors-clean-typography-and-consistent-spacing-that-works-for-desktop-and-mobile-avoiding-blue-and-purple-unless-specified",
+      "title": "Design a minimalist, professional visual theme with neutral colors, clean typography, and consistent spacing that works for desktop and mobile, avoiding blue and purple unless specified",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Authentication system with JWT and role-based access (admin, manager, designer)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Project management module with CRUD, status workflow, budget tracking, client assignment, and deadlines",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "CRM module for client database with contact history, notes, and project linking",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Finance & invoicing module with VAT support, project-based accounting, cashflow tracking, and KSeF export structure",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Shopping list & sourcing module with product catalog, supplier info, URLs, price tracking, and project assignment",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Business intelligence dashboard with revenue/cost/profit reports, monthly summaries, and KPI widgets",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Document generator for branded PDFs (invoices, offers, shopping lists) with custom logo and color themes",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Room-based organization - projects divided into rooms with assigned products, costs, and notes",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Product import from online stores, custom product database, and manual entry with auto-save of name, image, price, shop, link, availability",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Automatic budget calculation by project, room, and category with real-time updates and budget overage alerts",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Task management module for design, orders, and realization with deadlines, statuses, notes, and reminders",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Client portal to share visualizations, moodboards, product lists, and budget with approval and commenting features",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Moodboard module linking inspiration boards directly to shopping list products with budget visibility",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Logistics module with order status tracking (planned, ordered, in transit, delivered, installed) and invoice archiving",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Minimalist professional UI with light/dark mode, desktop and mobile versions",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Intelligent suggestions module for cheaper alternatives, budget overruns detection, and delay analysis",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Create user authentication system with registration, login, and role-based access control supporting three roles: admin, manager, and designer",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Implement project management system where each project contains client data, timeline, budget, documentation, and complete material specifications",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Create room-based organization within projects where each room can have assigned products, costs, and notes specific to that space",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Build shopping list module supporting three input methods: manual entry with all product details (name, image URL, price, shop, link, availability), import from a reusable product library, and placeholder for future external shop integration",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Implement automatic budget calculation system that computes costs in real-time for entire project, individual rooms, and product categories (furniture, lighting, finishing materials, appliances, decorations) with budget overage warnings",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Create task management system for tracking design, ordering, and realization tasks with deadlines, status tracking, and notes",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-23",
+      "summary": "Implement client CRM module with contact database storing client information, contact history, notes, and project associations",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-24",
+      "summary": "Build logistics tracking system where products transition through statuses: planned, ordered, in transit, delivered, and installed with full visibility of current state",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Create moodboard module where inspiration boards can be built with items directly linked to products in the shopping list, showing real budget impact",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Implement client portal access control allowing designers to share selected project elements (visualizations, moodboards, product lists, budget) with clients for approval and commenting",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Shop List",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

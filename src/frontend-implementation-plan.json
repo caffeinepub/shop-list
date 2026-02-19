@@ -1,0 +1,479 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Interior Design Hub - Frontend Implementation",
+  "requirements": [
+    {
+      "id": "REQ-21",
+      "summary": "Create authentication pages for registration and login with form validation and error handling",
+      "acceptanceCriteria": [
+        "Registration form collects email, password, name, and role",
+        "Login form collects email and password",
+        "Client-side validation provides immediate feedback",
+        "Error messages display for invalid credentials or registration failures",
+        "Successful login redirects to main dashboard"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/LoginButton.tsx",
+          "operation": "create",
+          "description": "Create login/logout button component using the authorization component's useInternetIdentity hook to handle authentication state and login/logout actions with proper error handling"
+        },
+        {
+          "path": "frontend/src/components/ProfileSetupModal.tsx",
+          "operation": "create",
+          "description": "Create modal component for first-time user profile setup that collects name, email, phone, company, and role (designer/manager/admin) using saveCallerUserProfile from backend. Use the authorization component's pattern to prevent modal flash by checking actor availability before showing. Verify the authorization component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useGetCallerUserProfile.ts",
+          "operation": "create",
+          "description": "Create React Query hook that fetches current user's profile using getCallerUserProfile backend method. Follow the authorization component's pattern for preventing profile setup modal flash by properly handling actor dependency and loading states. Verify the authorization component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useSaveCallerUserProfile.ts",
+          "operation": "create",
+          "description": "Create React Query mutation hook for saving user profile using saveCallerUserProfile backend method with proper error handling and cache invalidation"
+        }
+      ]
+    },
+    {
+      "id": "REQ-22",
+      "summary": "Implement project list view showing all projects with key information and ability to create new projects and navigate to project details",
+      "acceptanceCriteria": [
+        "All projects are listed with name, client, budget status, and deadline",
+        "Create project button opens form for new project",
+        "Projects can be clicked to open detailed view",
+        "Projects can be filtered and sorted",
+        "Budget status indicators show green/yellow/red based on usage"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ProjectsPage.tsx",
+          "operation": "create",
+          "description": "Create projects list page displaying all user projects from getMyProjects backend method with cards showing name, client ID, budget status indicator (green/yellow/red based on spent vs budget), and timeline. Include create project button and navigation to project detail view. Add filter and sort controls."
+        },
+        {
+          "path": "frontend/src/components/ProjectCard.tsx",
+          "operation": "create",
+          "description": "Create project card component displaying project name, client ID, budget status visual indicator with color coding, and timeline with click handler to navigate to project details"
+        },
+        {
+          "path": "frontend/src/components/CreateProjectModal.tsx",
+          "operation": "create",
+          "description": "Create modal component with form for creating new project collecting name, clientId, timeline, budget, and initial status. Use addProject backend method with generated ID."
+        },
+        {
+          "path": "frontend/src/hooks/useGetMyProjects.ts",
+          "operation": "create",
+          "description": "Create React Query hook that fetches user's projects using getMyProjects backend method with proper loading and error states"
+        },
+        {
+          "path": "frontend/src/hooks/useAddProject.ts",
+          "operation": "create",
+          "description": "Create React Query mutation hook for creating projects using addProject backend method with cache invalidation"
+        }
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "summary": "Build project dashboard displaying comprehensive project overview including client data, timeline, budget status, room breakdown, and material specifications",
+      "acceptanceCriteria": [
+        "Dashboard shows project name, client, and key dates",
+        "Budget summary with spent vs. planned is visible",
+        "List of rooms with their individual budgets is displayed",
+        "Recent activity and upcoming tasks are shown",
+        "Navigation to detailed project sections is available"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ProjectDashboardPage.tsx",
+          "operation": "create",
+          "description": "Create project dashboard page using project ID from route params to fetch project details via getProject backend method. Display project name, client ID, timeline, budget summary with spent vs planned calculation, rooms list with individual budgets, and navigation cards to shopping lists, tasks, moodboards, and logistics sections."
+        },
+        {
+          "path": "frontend/src/components/BudgetSummaryCard.tsx",
+          "operation": "create",
+          "description": "Create budget summary card component showing total budget, total spent (calculated from all products across rooms), remaining budget, and visual progress bar with percentage"
+        },
+        {
+          "path": "frontend/src/components/RoomBudgetList.tsx",
+          "operation": "create",
+          "description": "Create component displaying list of rooms with their names and calculated budgets (sum of products assigned to each room) with click handlers to view room details"
+        },
+        {
+          "path": "frontend/src/hooks/useGetProject.ts",
+          "operation": "create",
+          "description": "Create React Query hook that fetches single project details using getProject backend method with project ID parameter"
+        }
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "summary": "Implement room management interface where rooms can be added to projects, edited, and have products and costs assigned to them with per-room budget display",
+      "acceptanceCriteria": [
+        "Rooms can be created with name and description",
+        "Room list shows name and total cost",
+        "Clicking a room shows products assigned to that room",
+        "Products can be assigned to rooms via dropdown or drag-and-drop",
+        "Room budget calculation is displayed"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/RoomsPage.tsx",
+          "operation": "create",
+          "description": "Create rooms management page for a specific project showing list of rooms with names and calculated total costs. Include add room button and click handlers to expand/navigate to room details showing assigned products."
+        },
+        {
+          "path": "frontend/src/components/RoomCard.tsx",
+          "operation": "create",
+          "description": "Create room card component displaying room name, area, category, notes, and calculated budget (sum of all product prices in the room) with expand/collapse functionality to show assigned products list"
+        },
+        {
+          "path": "frontend/src/components/AddRoomModal.tsx",
+          "operation": "create",
+          "description": "Create modal component with form for adding room to project collecting name, area, notes, category, and budget. Use addRoom backend method with project ID and generated room ID."
+        },
+        {
+          "path": "frontend/src/hooks/useAddRoom.ts",
+          "operation": "create",
+          "description": "Create React Query mutation hook for adding rooms to projects using addRoom backend method with cache invalidation for project data"
+        }
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "summary": "Create shopping list interface with product cards showing image, name, price, shop, link, quantity, status, and category with ability to add, edit, and remove items",
+      "acceptanceCriteria": [
+        "Products display in card or list format with all key information",
+        "Add product form supports all fields: name, image URL, price, shop, link, availability, quantity, category",
+        "Products can be edited inline or via modal",
+        "Products can be deleted with confirmation",
+        "Products can be filtered by category and status"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ShoppingListPage.tsx",
+          "operation": "create",
+          "description": "Create shopping list page displaying all shopping lists from getShoppingLists backend method with expandable sections showing products in each list. Include add shopping list button, filters for category and status, and calculated totals."
+        },
+        {
+          "path": "frontend/src/components/ShoppingListCard.tsx",
+          "operation": "create",
+          "description": "Create shopping list card component showing list name, shop, total, discount, status, and expandable products grid with product cards"
+        },
+        {
+          "path": "frontend/src/components/ProductCard.tsx",
+          "operation": "create",
+          "description": "Create product card component displaying product image, name, price, shop, link (as clickable), quantity, status badge, availability, and action buttons for edit and delete"
+        },
+        {
+          "path": "frontend/src/components/AddProductModal.tsx",
+          "operation": "create",
+          "description": "Create modal component with form for adding product to shopping list collecting name, image URL, price, shop, link, availability, quantity, status, and roomId. Products are added within shopping list context."
+        },
+        {
+          "path": "frontend/src/components/AddShoppingListModal.tsx",
+          "operation": "create",
+          "description": "Create modal component with form for creating new shopping list collecting name, shop, discount, and initial status. Use addShoppingList backend method with generated ID."
+        },
+        {
+          "path": "frontend/src/hooks/useGetShoppingLists.ts",
+          "operation": "create",
+          "description": "Create React Query hook that fetches all shopping lists using getShoppingLists backend method"
+        },
+        {
+          "path": "frontend/src/hooks/useAddShoppingList.ts",
+          "operation": "create",
+          "description": "Create React Query mutation hook for creating shopping lists using addShoppingList backend method with cache invalidation"
+        }
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "summary": "Build budget overview page with automatic calculations showing total project cost, per-room breakdown, per-category breakdown, and visual indicators for budget overages",
+      "acceptanceCriteria": [
+        "Total project budget and spent amount are prominently displayed",
+        "Budget bar shows percentage used with visual warning if exceeded",
+        "Room-by-room cost breakdown is shown in table or chart",
+        "Category breakdown (furniture, lighting, materials, appliances, decorations) is displayed",
+        "Overage warnings appear when budget is exceeded"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/BudgetOverviewPage.tsx",
+          "operation": "create",
+          "description": "Create budget overview page for a project calculating total spent from all products across all rooms and shopping lists. Display total budget vs spent with percentage bar and color indicators (green/yellow/red). Show room-by-room breakdown table and category breakdown calculated by grouping products. Add overage warning banner when spent exceeds budget."
+        },
+        {
+          "path": "frontend/src/components/BudgetProgressBar.tsx",
+          "operation": "create",
+          "description": "Create budget progress bar component showing percentage of budget used with color coding: green (<80%), yellow (80-100%), red (>100%)"
+        },
+        {
+          "path": "frontend/src/components/CategoryBudgetBreakdown.tsx",
+          "operation": "create",
+          "description": "Create component displaying budget breakdown by product categories (furniture, lighting, finishing materials, appliances, decorations) in table or chart format with totals"
+        },
+        {
+          "path": "frontend/src/utils/budgetCalculations.ts",
+          "operation": "create",
+          "description": "Create utility functions for budget calculations: calculateTotalSpent (sum all product prices), calculateRoomBudgets (group products by room), calculateCategoryBudgets (group products by category), and calculateBudgetPercentage"
+        }
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "summary": "Create task management interface displaying project tasks with deadlines, statuses, and notes, allowing users to add, update status, and complete tasks",
+      "acceptanceCriteria": [
+        "Tasks are displayed in list or kanban board format",
+        "Task cards show title, due date, and status",
+        "Users can add new tasks with all required fields",
+        "Task status can be changed via dropdown or drag-and-drop",
+        "Overdue tasks are visually highlighted",
+        "Task details can be expanded to view/edit notes"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/TasksPage.tsx",
+          "operation": "create",
+          "description": "Create tasks management page displaying tasks from getAllTasks backend method in kanban board layout grouped by status (pending, in progress, completed). Include add task button, status update capability, and visual highlighting for overdue tasks based on deadline comparison."
+        },
+        {
+          "path": "frontend/src/components/TaskCard.tsx",
+          "operation": "create",
+          "description": "Create task card component showing title, description, deadline, status badge, type, assigned person, and room association. Include status dropdown for updates and highlight overdue tasks in red."
+        },
+        {
+          "path": "frontend/src/components/AddTaskModal.tsx",
+          "operation": "create",
+          "description": "Create modal component with form for creating task collecting title, description, status, deadline, projectId, roomId, type (design/ordering/realization), and assigned person. Use addTask backend method with generated ID."
+        },
+        {
+          "path": "frontend/src/components/TaskKanbanBoard.tsx",
+          "operation": "create",
+          "description": "Create kanban board component with columns for each task status allowing drag-and-drop status updates or dropdown selection within task cards"
+        },
+        {
+          "path": "frontend/src/hooks/useGetAllTasks.ts",
+          "operation": "create",
+          "description": "Create React Query hook that fetches all tasks for a project using getAllTasks backend method with projectId parameter"
+        },
+        {
+          "path": "frontend/src/hooks/useAddTask.ts",
+          "operation": "create",
+          "description": "Create React Query mutation hook for creating tasks using addTask backend method with cache invalidation"
+        }
+      ]
+    },
+    {
+      "id": "REQ-17",
+      "summary": "Build moodboard creation and viewing interface where users can assemble inspiration boards with items linked to actual shopping list products, showing real-time budget impact",
+      "acceptanceCriteria": [
+        "Moodboards can be created with title and description",
+        "Items can be added to moodboard by linking to shopping list products",
+        "Each item shows thumbnail and price",
+        "Total moodboard cost is calculated and displayed",
+        "Moodboard can be shared with clients"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/MoodboardsPage.tsx",
+          "operation": "create",
+          "description": "Create moodboards page displaying grid of moodboards for a project. Each moodboard shows name, description, images grid, linked products, and calculated totalCost. Include create moodboard button and share with client functionality."
+        },
+        {
+          "path": "frontend/src/components/MoodboardCard.tsx",
+          "operation": "create",
+          "description": "Create moodboard card component displaying moodboard name, description, images grid, total cost calculated from linked products, and share button"
+        },
+        {
+          "path": "frontend/src/components/CreateMoodboardModal.tsx",
+          "operation": "create",
+          "description": "Create modal component for creating moodboard with form collecting name, description, projectId, roomId, and allowing selection of products from shopping lists to link. Calculate and display totalCost as products are selected."
+        },
+        {
+          "path": "frontend/src/hooks/useGetMoodboards.ts",
+          "operation": "create",
+          "description": "Create React Query hook that fetches moodboards from getAllUserData backend method and filters by project"
+        }
+      ]
+    },
+    {
+      "id": "REQ-18",
+      "summary": "Create logistics tracking view showing product order status pipeline from planned through ordered, in transit, delivered, to installed with ability to update status and view which items need attention",
+      "acceptanceCriteria": [
+        "Products are displayed grouped by status",
+        "Status pipeline is visually represented (e.g., columns or timeline)",
+        "Users can update product status via dropdown or drag-and-drop",
+        "Items requiring attention are highlighted",
+        "Filter by status is available"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/LogisticsPage.tsx",
+          "operation": "create",
+          "description": "Create logistics tracking page displaying all products from shopping lists grouped by status (planned, ordered, in transit, delivered, installed) in kanban-style columns. Include status update capability, filters, and highlighting for items needing attention (e.g., stuck in one status too long)."
+        },
+        {
+          "path": "frontend/src/components/LogisticsStatusColumn.tsx",
+          "operation": "create",
+          "description": "Create status column component for logistics kanban board showing products in a specific status with drag-and-drop support for status updates"
+        },
+        {
+          "path": "frontend/src/components/LogisticsProductCard.tsx",
+          "operation": "create",
+          "description": "Create product card for logistics view showing product image, name, shop, status badge, and update status dropdown with compact layout for kanban display"
+        }
+      ]
+    },
+    {
+      "id": "REQ-19",
+      "summary": "Implement client management interface for CRM module with list of clients, detail view showing contact information, project associations, contact history, and notes",
+      "acceptanceCriteria": [
+        "Client list displays names and contact information",
+        "Client detail view shows full profile with all fields",
+        "Associated projects are listed and clickable",
+        "Contact history timeline is displayed",
+        "Notes can be added and viewed"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ClientsPage.tsx",
+          "operation": "create",
+          "description": "Create clients management page displaying list of client user profiles (role=client) with names and contact information. Include detail view showing full profile, associated projects (filtered by clientId), contact history section, and notes area."
+        },
+        {
+          "path": "frontend/src/components/ClientCard.tsx",
+          "operation": "create",
+          "description": "Create client card component displaying client name, email, phone, company, and click handler to view full client details with projects and history"
+        },
+        {
+          "path": "frontend/src/components/ClientDetailView.tsx",
+          "operation": "create",
+          "description": "Create client detail view component showing complete profile, list of associated projects with navigation links, contact history timeline, and notes section with add note capability"
+        },
+        {
+          "path": "frontend/src/hooks/useGetAllUsersData.ts",
+          "operation": "create",
+          "description": "Create React Query hook for admin users to fetch all users data using getAllUsersData backend method to access client profiles. Use the authorization component's hasPermission check to ensure only admins can call this."
+        }
+      ]
+    },
+    {
+      "id": "REQ-20",
+      "summary": "Build product library interface for managing reusable products where users can add frequently used items with all details and quickly copy them to project shopping lists",
+      "acceptanceCriteria": [
+        "Product library displays saved products with images and key details",
+        "Users can add products to library with all fields",
+        "Products can be searched and filtered",
+        "Copy to project button adds product to current project's shopping list",
+        "Library products can be edited and deleted"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ProductLibraryPage.tsx",
+          "operation": "create",
+          "description": "Create product library page displaying all reusable products from getProductLibrary backend method in grid layout. Include add to library button, search and filter controls, and copy to project functionality for each product."
+        },
+        {
+          "path": "frontend/src/components/LibraryProductCard.tsx",
+          "operation": "create",
+          "description": "Create library product card component showing product image, name, price, shop, type, description, and action buttons for copy to project, edit, and delete"
+        },
+        {
+          "path": "frontend/src/components/AddToLibraryModal.tsx",
+          "operation": "create",
+          "description": "Create modal component with form for adding product to library collecting name, image URL, price, shop, description, and type. Use addToProductLibrary backend method with generated ID."
+        },
+        {
+          "path": "frontend/src/hooks/useGetProductLibrary.ts",
+          "operation": "create",
+          "description": "Create React Query hook that fetches product library using getProductLibrary backend method"
+        },
+        {
+          "path": "frontend/src/hooks/useAddToProductLibrary.ts",
+          "operation": "create",
+          "description": "Create React Query mutation hook for adding products to library using addToProductLibrary backend method with cache invalidation"
+        }
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "summary": "Implement client portal view with read-only access to shared project elements where clients can view moodboards, product lists, budget summaries, and leave comments without editing",
+      "acceptanceCriteria": [
+        "Client users see only projects shared with them",
+        "Shared elements (moodboards, products, budget) are clearly displayed",
+        "All data is read-only for client users",
+        "Comment box is available on shared items",
+        "Client comments are visible to designer"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ClientPortalPage.tsx",
+          "operation": "create",
+          "description": "Create client portal page that displays projects where current user's principal is in sharedWithClients array. Show read-only views of project overview, moodboards, shopping lists, and budget summary. Include comment functionality on shared items. Use the authorization component to verify client role and restrict access appropriately. Verify the authorization component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ClientCommentBox.tsx",
+          "operation": "create",
+          "description": "Create comment box component allowing clients to leave comments on shared project elements with timestamp and author display"
+        },
+        {
+          "path": "frontend/src/components/SharedProjectView.tsx",
+          "operation": "create",
+          "description": "Create read-only project view component for clients showing project name, timeline, moodboards, product lists, and budget summary without edit capabilities"
+        },
+        {
+          "path": "frontend/src/hooks/useShareProjectWithClient.ts",
+          "operation": "create",
+          "description": "Create React Query mutation hook for sharing projects with clients using shareProjectWithClient backend method with client principal parameter"
+        }
+      ]
+    },
+    {
+      "id": "REQ-23",
+      "summary": "Design a minimalist, professional visual theme with neutral colors, clean typography, and consistent spacing that works for desktop and mobile",
+      "acceptanceCriteria": [
+        "Color palette uses neutral tones (grays, whites, earth tones) as primary colors",
+        "Typography is clean and professional",
+        "Layout is spacious with clear visual hierarchy",
+        "Interface is responsive for desktop and mobile devices",
+        "Design conveys professionalism suitable for design industry"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Update global styles to implement minimalist professional theme with neutral color palette (grays, whites, earth tones), clean typography, and consistent spacing. Ensure mobile responsiveness and clear visual hierarchy throughout."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Configure Tailwind theme with custom neutral color palette (avoiding blue and purple), professional typography scale, and spacing utilities that support the minimalist design system for desktop and mobile"
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "create",
+          "description": "Create main layout component with consistent header, navigation sidebar, and content area using neutral theme colors and spacious layout. Include responsive behavior for mobile with collapsible sidebar."
+        }
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "summary": "Wire project dashboard and all feature pages into application routing and navigation",
+      "acceptanceCriteria": [],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add routes for all created pages: ProjectsPage, ProjectDashboardPage, RoomsPage, ShoppingListPage, BudgetOverviewPage, TasksPage, MoodboardsPage, LogisticsPage, ClientsPage, ProductLibraryPage, and ClientPortalPage. Ensure authentication is required before accessing application routes. Wrap routes in Layout component for consistent navigation. Use the authorization component's authentication guards to protect routes appropriately. Verify the authorization component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/Navigation.tsx",
+          "operation": "create",
+          "description": "Create navigation component with links to all main pages (Projects, Clients, Product Library, Client Portal for client role users). Include role-based visibility using the authorization component's hasPermission checks. Verify the authorization component's usage instructions before implementing."
+        }
+      ]
+    }
+  ]
+}

@@ -1,2 +1,3 @@
-# shop-list
-Exported from Caffeine project: Shop List
+## Shop List
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`
