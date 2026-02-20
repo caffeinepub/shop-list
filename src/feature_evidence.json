@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-build-project-dashboard-displaying-comprehensive-project-overview-including-client-data-timeline-budget-status-room-breakdown-and-material-specifications",
-      "featureTitle": "Build project dashboard displaying comprehensive project overview including client data, timeline, budget status, room breakdown, and material specifications",
+      "featureId": "feature-fix-the-authentication-flow-so-users-can-successfully-sign-in-with-internet-identity-and-access-the-main-application-features-projects-rooms-shopping-lists-tasks-etc-instead-of-being-stuck-on-the-landing-page-that-shows-interior-hub-professional-project-management-for-interior-designers-sign-in-to-manage-your-projects-clients-and-shopping-lists",
+      "featureTitle": "Fix the authentication flow so users can successfully sign in with Internet Identity and access the main application features (projects, rooms, shopping lists, tasks, etc.) instead of being stuck on the landing page that shows 'Interior Hub Professional project management for interior designers Sign in to manage your projects, clients, and shopping lists'",
       "files": [
         "frontend/src/App.tsx"
       ],
@@ -16,20 +16,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-11"
+        "REQ-1"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-create-shopping-list-interface-with-product-cards-showing-image-name-price-shop-link-quantity-status-and-category-with-ability-to-add-edit-and-remove-items",
-      "featureTitle": "Create shopping list interface with product cards showing image, name, price, shop, link, quantity, status, and category with ability to add, edit, and remove items",
+      "featureId": "feature-ensure-the-profilesetupmodal-appears-automatically-for-new-users-who-have-not-completed-their-profile-and-blocks-access-to-main-features-until-profile-setup-is-complete",
+      "featureTitle": "Ensure the ProfileSetupModal appears automatically for new users who have not completed their profile, and blocks access to main features until profile setup is complete",
       "files": [
-        "frontend/src/components/AddShoppingListModal.tsx",
-        "frontend/src/components/ProductCard.tsx",
-        "frontend/src/components/ShoppingListCard.tsx",
-        "frontend/src/hooks/useAddShoppingList.ts",
-        "frontend/src/hooks/useGetShoppingLists.ts",
-        "frontend/src/pages/ShoppingListPage.tsx"
+        "frontend/src/App.tsx",
+        "frontend/src/components/ProfileSetupModal.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -40,18 +36,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-12"
+        "REQ-2"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-implement-room-management-interface-where-rooms-can-be-added-to-projects-edited-and-have-products-and-costs-assigned-to-them-with-per-room-budget-display",
-      "featureTitle": "Implement room management interface where rooms can be added to projects, edited, and have products and costs assigned to them with per-room budget display",
+      "featureId": "feature-verify-that-the-layout-component-and-main-application-routes-render-correctly-after-authentication-state-changes-from-unauthenticated-to-authenticated",
+      "featureTitle": "Verify that the Layout component and main application routes render correctly after authentication state changes from unauthenticated to authenticated",
       "files": [
-        "frontend/src/components/AddRoomModal.tsx",
-        "frontend/src/components/RoomCard.tsx",
-        "frontend/src/hooks/useAddRoom.ts",
-        "frontend/src/pages/RoomsPage.tsx"
+        "frontend/src/App.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -62,225 +55,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-13"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-build-budget-overview-page-with-automatic-calculations-showing-total-project-cost-per-room-breakdown-per-category-breakdown-furniture-lighting-materials-appliances-decorations-and-visual-indicators-for-budget-overages",
-      "featureTitle": "Build budget overview page with automatic calculations showing total project cost, per-room breakdown, per-category breakdown (furniture, lighting, materials, appliances, decorations), and visual indicators for budget overages",
-      "files": [
-        "frontend/src/components/BudgetProgressBar.tsx",
-        "frontend/src/components/CategoryBudgetBreakdown.tsx",
-        "frontend/src/pages/BudgetOverviewPage.tsx",
-        "frontend/src/utils/budgetCalculations.ts"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-14"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-create-task-management-interface-displaying-project-tasks-with-deadlines-statuses-and-notes-allowing-users-to-add-update-status-and-complete-tasks",
-      "featureTitle": "Create task management interface displaying project tasks with deadlines, statuses, and notes, allowing users to add, update status, and complete tasks",
-      "files": [
-        "frontend/src/components/AddTaskModal.tsx",
-        "frontend/src/components/TaskCard.tsx",
-        "frontend/src/components/TaskKanbanBoard.tsx",
-        "frontend/src/hooks/useAddTask.ts",
-        "frontend/src/hooks/useGetAllTasks.ts",
-        "frontend/src/pages/TasksPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-15"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-client-portal-view-with-read-only-access-to-shared-project-elements-where-clients-can-view-moodboards-product-lists-budget-summaries-and-leave-comments-without-editing",
-      "featureTitle": "Implement client portal view with read-only access to shared project elements where clients can view moodboards, product lists, budget summaries, and leave comments without editing",
-      "files": [
-        "frontend/src/components/SharedProjectView.tsx",
-        "frontend/src/hooks/useShareProjectWithClient.ts",
-        "frontend/src/pages/ClientPortalPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-16"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-build-moodboard-creation-and-viewing-interface-where-users-can-assemble-inspiration-boards-with-items-linked-to-actual-shopping-list-products-showing-real-time-budget-impact",
-      "featureTitle": "Build moodboard creation and viewing interface where users can assemble inspiration boards with items linked to actual shopping list products, showing real-time budget impact",
-      "files": [
-        "frontend/src/components/MoodboardCard.tsx",
-        "frontend/src/hooks/useGetMoodboards.ts",
-        "frontend/src/pages/MoodboardsPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-17"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-create-logistics-tracking-view-showing-product-order-status-pipeline-from-planned-through-ordered-in-transit-delivered-to-installed-with-ability-to-update-status-and-view-which-items-need-attention",
-      "featureTitle": "Create logistics tracking view showing product order status pipeline from planned through ordered, in transit, delivered, to installed with ability to update status and view which items need attention",
-      "files": [
-        "frontend/src/components/LogisticsProductCard.tsx",
-        "frontend/src/components/LogisticsStatusColumn.tsx",
-        "frontend/src/pages/LogisticsPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-18"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-client-management-interface-for-crm-module-with-list-of-clients-detail-view-showing-contact-information-project-associations-contact-history-and-notes",
-      "featureTitle": "Implement client management interface for CRM module with list of clients, detail view showing contact information, project associations, contact history, and notes",
-      "files": [
-        "frontend/src/components/ClientCard.tsx",
-        "frontend/src/hooks/useGetAllUsersData.ts",
-        "frontend/src/pages/ClientsPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-19"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-build-product-library-interface-for-managing-reusable-products-where-users-can-add-frequently-used-items-with-all-details-and-quickly-copy-them-to-project-shopping-lists",
-      "featureTitle": "Build product library interface for managing reusable products where users can add frequently used items with all details and quickly copy them to project shopping lists",
-      "files": [
-        "frontend/src/components/LibraryProductCard.tsx",
-        "frontend/src/hooks/useAddToProductLibrary.ts",
-        "frontend/src/hooks/useGetProductLibrary.ts",
-        "frontend/src/pages/ProductLibraryPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-20"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-create-authentication-pages-for-registration-and-login-with-form-validation-and-error-handling",
-      "featureTitle": "Create authentication pages for registration and login with form validation and error handling",
-      "files": [
-        "frontend/src/components/LoginButton.tsx",
-        "frontend/src/components/ProfileSetupModal.tsx",
-        "frontend/src/hooks/useGetCallerUserProfile.ts",
-        "frontend/src/hooks/useSaveCallerUserProfile.ts"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-21"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-project-list-view-showing-all-projects-with-key-information-name-client-budget-status-deadline-and-ability-to-create-new-projects-and-navigate-to-project-details",
-      "featureTitle": "Implement project list view showing all projects with key information (name, client, budget status, deadline) and ability to create new projects and navigate to project details",
-      "files": [
-        "frontend/src/components/CreateProjectModal.tsx",
-        "frontend/src/components/ProjectCard.tsx",
-        "frontend/src/hooks/useAddProject.ts",
-        "frontend/src/hooks/useGetMyProjects.ts",
-        "frontend/src/pages/ProjectsPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-22"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-design-a-minimalist-professional-visual-theme-with-neutral-colors-clean-typography-and-consistent-spacing-that-works-for-desktop-and-mobile-avoiding-blue-and-purple-unless-specified",
-      "featureTitle": "Design a minimalist, professional visual theme with neutral colors, clean typography, and consistent spacing that works for desktop and mobile, avoiding blue and purple unless specified",
-      "files": [
-        "frontend/src/components/Layout.tsx",
-        "frontend/src/index.css",
-        "frontend/tailwind.config.js"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-23"
+        "REQ-3"
       ],
       "confidence": "high"
     }

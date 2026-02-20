@@ -3,6 +3,7 @@ import { useInternetIdentity } from './hooks/useInternetIdentity';
 import { useGetCallerUserProfile } from './hooks/useGetCallerUserProfile';
 import Layout from './components/Layout';
 import ProfileSetupModal from './components/ProfileSetupModal';
+import LoginButton from './components/LoginButton';
 import ProjectsPage from './pages/ProjectsPage';
 import ProjectDashboardPage from './pages/ProjectDashboardPage';
 import RoomsPage from './pages/RoomsPage';
@@ -44,6 +45,7 @@ function RootComponent() {
             </div>
             <div className="space-y-4">
               <p className="text-sm text-muted-foreground">Sign in to manage your projects, clients, and shopping lists</p>
+              <LoginButton />
             </div>
           </div>
         </div>
@@ -51,13 +53,25 @@ function RootComponent() {
     );
   }
 
+  if (showProfileSetup) {
+    return <ProfileSetupModal />;
+  }
+
+  if (profileLoading || !isFetched) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-background">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading profile...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <>
-      <Layout>
-        <Outlet />
-      </Layout>
-      {showProfileSetup && <ProfileSetupModal />}
-    </>
+    <Layout>
+      <Outlet />
+    </Layout>
   );
 }
 

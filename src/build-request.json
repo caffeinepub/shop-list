@@ -1,416 +1,72 @@
 {
   "kind": "build_request",
-  "title": "Build interior design project management application with comprehensive workflow",
-  "projectName": "Interior Design Hub",
-  "priority": "normal",
+  "title": "Fix authentication flow - enable app access after sign-in",
+  "projectName": "Interior Hub",
+  "priority": "high",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Create user authentication system with registration, login, and role-based access control supporting three roles: admin, manager, and designer",
-      "target": "backend",
+      "text": "Fix the authentication flow so users can successfully sign in with Internet Identity and access the main application features (projects, rooms, shopping lists, tasks, etc.) instead of being stuck on the landing page that shows 'Interior Hub Professional project management for interior designers Sign in to manage your projects, clients, and shopping lists'",
+      "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-20"
+        ],
+        "quotes": [
+          "after I open the app. I see only: \"Interior Hub Professional project management for interior designers Sign in to manage your projects, clients, and shopping lists\" but I can not open or run the app."
         ]
       },
       "acceptanceCriteria": [
-        "Users can register with email and password",
-        "Users can log in and receive authentication token",
-        "Three distinct roles exist: admin, manager, designer with different permission levels",
-        "Authentication state persists across sessions"
+        "After clicking sign in and completing Internet Identity authentication, user is redirected to the main app interface",
+        "User can see and access the main navigation menu (Projects, Shopping Lists, Tasks, etc.)",
+        "The landing/sign-in page is no longer displayed after successful authentication",
+        "User profile data is properly loaded after authentication",
+        "First-time users are prompted to complete profile setup before accessing main features"
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Implement project management system where each project contains client data, timeline, budget, documentation, and complete material specifications",
-      "target": "backend",
+      "text": "Ensure the ProfileSetupModal appears automatically for new users who have not completed their profile, and blocks access to main features until profile setup is complete",
+      "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-20"
         ]
       },
       "acceptanceCriteria": [
-        "Projects can be created with name, client, timeline, and initial budget",
-        "Each project stores client information, schedule, budget, and documentation references",
-        "Projects support multiple status states",
-        "Projects can be retrieved, updated, and deleted"
+        "ProfileSetupModal displays automatically after first-time Internet Identity sign-in",
+        "Modal cannot be dismissed until user completes all required fields (name, email, role)",
+        "After profile setup completion, user is redirected to the main application interface",
+        "Returning users with completed profiles skip the setup modal entirely"
       ]
     },
     {
       "id": "REQ-3",
-      "text": "Create room-based organization within projects where each room can have assigned products, costs, and notes specific to that space",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Each project can contain multiple rooms",
-        "Rooms have names and descriptions",
-        "Products and costs can be assigned to specific rooms",
-        "Room-specific notes can be added"
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "text": "Build shopping list module supporting three input methods: manual entry with all product details (name, image URL, price, shop, link, availability), import from a reusable product library, and placeholder for future external shop integration",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Products can be added manually with name, image URL, price, shop name, product link, and availability status",
-        "A reusable product library exists for frequently used items",
-        "Products can be copied from the library to project shopping lists",
-        "Each product has quantity, realization status, category, and space for alternative suggestions"
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "text": "Implement automatic budget calculation system that computes costs in real-time for entire project, individual rooms, and product categories (furniture, lighting, finishing materials, appliances, decorations) with budget overage warnings",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Budget is automatically calculated from shopping list items",
-        "Total project budget is displayed",
-        "Per-room budget breakdown is available",
-        "Per-category budget (furniture, lighting, materials, appliances, decorations) is calculated",
-        "System alerts when budget is exceeded"
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "text": "Create task management system for tracking design, ordering, and realization tasks with deadlines, status tracking, and notes",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Tasks can be created with title, description, due date, and status",
-        "Tasks are linked to specific projects",
-        "Task statuses can be updated (pending, in progress, completed)",
-        "Tasks support notes and comments"
-      ]
-    },
-    {
-      "id": "REQ-7",
-      "text": "Implement client CRM module with contact database storing client information, contact history, notes, and project associations",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Client records contain name, email, phone, and address",
-        "Contact history can be logged with timestamps",
-        "Notes can be added to client records",
-        "Clients can be linked to one or more projects"
-      ]
-    },
-    {
-      "id": "REQ-8",
-      "text": "Build logistics tracking system where products transition through statuses: planned, ordered, in transit, delivered, and installed with full visibility of current state",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Products in shopping lists support status field",
-        "Five distinct statuses exist: planned, ordered, in transit, delivered, installed",
-        "Product status can be updated through workflow",
-        "Status history is maintained"
-      ]
-    },
-    {
-      "id": "REQ-9",
-      "text": "Create moodboard module where inspiration boards can be built with items directly linked to products in the shopping list, showing real budget impact",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Moodboards can be created for projects",
-        "Moodboard items link to actual shopping list products",
-        "Each moodboard displays total cost of included items",
-        "Moodboards support images and descriptions"
-      ]
-    },
-    {
-      "id": "REQ-10",
-      "text": "Implement client portal access control allowing designers to share selected project elements (visualizations, moodboards, product lists, budget) with clients for approval and commenting",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Client users can be granted limited access to specific projects",
-        "Sharing permissions can be configured per project element type",
-        "Clients can view but not edit shared content",
-        "Clients can leave comments on shared items"
-      ]
-    },
-    {
-      "id": "REQ-11",
-      "text": "Build project dashboard displaying comprehensive project overview including client data, timeline, budget status, room breakdown, and material specifications",
+      "text": "Verify that the Layout component and main application routes render correctly after authentication state changes from unauthenticated to authenticated",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-20"
         ]
       },
       "acceptanceCriteria": [
-        "Dashboard shows project name, client, and key dates",
-        "Budget summary with spent vs. planned is visible",
-        "List of rooms with their individual budgets is displayed",
-        "Recent activity and upcoming tasks are shown",
-        "Navigation to detailed project sections is available"
-      ]
-    },
-    {
-      "id": "REQ-12",
-      "text": "Create shopping list interface with product cards showing image, name, price, shop, link, quantity, status, and category with ability to add, edit, and remove items",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Products display in card or list format with all key information",
-        "Add product form supports all fields: name, image URL, price, shop, link, availability, quantity, category",
-        "Products can be edited inline or via modal",
-        "Products can be deleted with confirmation",
-        "Products can be filtered by category and status"
-      ]
-    },
-    {
-      "id": "REQ-13",
-      "text": "Implement room management interface where rooms can be added to projects, edited, and have products and costs assigned to them with per-room budget display",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Rooms can be created with name and description",
-        "Room list shows name and total cost",
-        "Clicking a room shows products assigned to that room",
-        "Products can be assigned to rooms via dropdown or drag-and-drop",
-        "Room budget calculation is displayed"
-      ]
-    },
-    {
-      "id": "REQ-14",
-      "text": "Build budget overview page with automatic calculations showing total project cost, per-room breakdown, per-category breakdown (furniture, lighting, materials, appliances, decorations), and visual indicators for budget overages",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Total project budget and spent amount are prominently displayed",
-        "Budget bar shows percentage used with visual warning if exceeded",
-        "Room-by-room cost breakdown is shown in table or chart",
-        "Category breakdown (furniture, lighting, materials, appliances, decorations) is displayed",
-        "Overage warnings appear when budget is exceeded"
-      ]
-    },
-    {
-      "id": "REQ-15",
-      "text": "Create task management interface displaying project tasks with deadlines, statuses, and notes, allowing users to add, update status, and complete tasks",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Tasks are displayed in list or kanban board format",
-        "Task cards show title, due date, and status",
-        "Users can add new tasks with all required fields",
-        "Task status can be changed via dropdown or drag-and-drop",
-        "Overdue tasks are visually highlighted",
-        "Task details can be expanded to view/edit notes"
-      ]
-    },
-    {
-      "id": "REQ-16",
-      "text": "Implement client portal view with read-only access to shared project elements where clients can view moodboards, product lists, budget summaries, and leave comments without editing",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Client users see only projects shared with them",
-        "Shared elements (moodboards, products, budget) are clearly displayed",
-        "All data is read-only for client users",
-        "Comment box is available on shared items",
-        "Client comments are visible to designer"
-      ]
-    },
-    {
-      "id": "REQ-17",
-      "text": "Build moodboard creation and viewing interface where users can assemble inspiration boards with items linked to actual shopping list products, showing real-time budget impact",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Moodboards can be created with title and description",
-        "Items can be added to moodboard by linking to shopping list products",
-        "Each item shows thumbnail and price",
-        "Total moodboard cost is calculated and displayed",
-        "Moodboard can be shared with clients"
-      ]
-    },
-    {
-      "id": "REQ-18",
-      "text": "Create logistics tracking view showing product order status pipeline from planned through ordered, in transit, delivered, to installed with ability to update status and view which items need attention",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Products are displayed grouped by status",
-        "Status pipeline is visually represented (e.g., columns or timeline)",
-        "Users can update product status via dropdown or drag-and-drop",
-        "Items requiring attention are highlighted",
-        "Filter by status is available"
-      ]
-    },
-    {
-      "id": "REQ-19",
-      "text": "Implement client management interface for CRM module with list of clients, detail view showing contact information, project associations, contact history, and notes",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Client list displays names and contact information",
-        "Client detail view shows full profile with all fields",
-        "Associated projects are listed and clickable",
-        "Contact history timeline is displayed",
-        "Notes can be added and viewed"
-      ]
-    },
-    {
-      "id": "REQ-20",
-      "text": "Build product library interface for managing reusable products where users can add frequently used items with all details and quickly copy them to project shopping lists",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Product library displays saved products with images and key details",
-        "Users can add products to library with all fields",
-        "Products can be searched and filtered",
-        "Copy to project button adds product to current project's shopping list",
-        "Library products can be edited and deleted"
-      ]
-    },
-    {
-      "id": "REQ-21",
-      "text": "Create authentication pages for registration and login with form validation and error handling",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Registration form collects email, password, name, and role",
-        "Login form collects email and password",
-        "Client-side validation provides immediate feedback",
-        "Error messages display for invalid credentials or registration failures",
-        "Successful login redirects to main dashboard"
-      ]
-    },
-    {
-      "id": "REQ-22",
-      "text": "Implement project list view showing all projects with key information (name, client, budget status, deadline) and ability to create new projects and navigate to project details",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "All projects are listed with name, client, budget status, and deadline",
-        "Create project button opens form for new project",
-        "Projects can be clicked to open detailed view",
-        "Projects can be filtered and sorted",
-        "Budget status indicators show green/yellow/red based on usage"
-      ]
-    },
-    {
-      "id": "REQ-23",
-      "text": "Design a minimalist, professional visual theme with neutral colors, clean typography, and consistent spacing that works for desktop and mobile, avoiding blue and purple unless specified",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Color palette uses neutral tones (grays, whites, earth tones) as primary colors",
-        "Typography is clean and professional",
-        "Layout is spacious with clear visual hierarchy",
-        "Interface is responsive for desktop and mobile devices",
-        "Design conveys professionalism suitable for design industry"
+        "Layout component with header, navigation, and main content area renders after sign-in",
+        "Route navigation works correctly (clicking menu items navigates to correct pages)",
+        "User profile information displays in the header/navigation",
+        "No console errors related to authentication or routing"
       ]
     }
   ],
   "constraints": [
-    "Use only Motoko for backend implementation (no Python, FastAPI, PostgreSQL, or external databases)",
-    "Use only React with TypeScript for frontend (no Vue, Angular, or other frameworks)",
-    "Do not use external authentication services like Auth0 or social logins",
-    "Do not implement Docker, microservices, or PostgreSQL as these are not supported",
-    "Do not integrate with external APIs for product scraping from online stores",
-    "Do not implement real-time features like WebSockets or live chat",
-    "Do not implement email services or SMS notifications",
-    "Backend must use single-actor architecture in main.mo",
-    "Do not edit immutable frontend paths: useInternetIdentity files, useActor.ts, main.tsx, or frontend/src/components/ui"
+    "Do not modify backend authentication logic or main.mo",
+    "Do not change the Internet Identity integration hook (useInternetIdentity.ts)",
+    "Maintain existing routing structure defined in App.tsx"
   ],
   "nonGoals": [
-    "PDF generation for invoices, offers, and shopping lists (deferred)",
-    "Invoice and VAT management features (out of scope for MVP)",
-    "KSeF Polish e-invoicing system integration (not applicable)",
-    "Business intelligence dashboard with revenue/cost/profit analytics (deferred)",
-    "Intelligent suggestions module for cheaper alternatives and budget analysis (deferred)",
-    "Automated reminders and notifications for tasks and deadlines (deferred)",
-    "Mobile-specific native app versions (responsive web is sufficient)",
-    "Document archiving for invoices and receipts (deferred)",
-    "Multi-tenant SaaS architecture with organization isolation (single-user focus for MVP)",
-    "Actual product import from external online stores (placeholder only)",
-    "Light/dark mode toggle (consistent light theme for MVP)"
+    "Adding new authentication methods beyond Internet Identity",
+    "Redesigning the landing page or login UI",
+    "Adding new user profile fields",
+    "Modifying backend user profile storage schema"
   ],
   "imageRequirements": {
     "required": [],

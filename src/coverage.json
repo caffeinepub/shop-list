@@ -1,453 +1,64 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-18T19:11:12.297Z",
+  "generatedAt": "2026-02-20T21:20:04.614Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 23,
-    "implemented": 13,
+    "total": 3,
+    "implemented": 3,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Create user authentication system with registration, login, and role-based access control supporting three roles: admin, manager, and designer",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-10",
-        "summary": "Implement client portal access control allowing designers to share selected project elements (visualizations, moodboards, product lists, budget) with clients for approval and commenting",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-11",
-        "summary": "Build project dashboard displaying comprehensive project overview including client data, timeline, budget status, room breakdown, and material specifications",
+        "summary": "Fix the authentication flow so users can successfully sign in with Internet Identity and access the main application features (projects, rooms, shopping lists, tasks, etc.) instead of being stuck on the landing page that shows 'Interior Hub Professional project management for interior designers Sign in to manage your projects, clients, and shopping lists'",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/App.tsx",
-          "frontend/src/components/Navigation.tsx"
+          "frontend/src/components/Layout.tsx"
         ],
         "matchedFiles": [
           "frontend/src/App.tsx"
         ]
       },
       {
-        "id": "REQ-12",
-        "summary": "Create shopping list interface with product cards showing image, name, price, shop, link, quantity, status, and category with ability to add, edit, and remove items",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/ShoppingListPage.tsx",
-          "frontend/src/components/ShoppingListCard.tsx",
-          "frontend/src/components/ProductCard.tsx",
-          "frontend/src/components/AddProductModal.tsx",
-          "frontend/src/components/AddShoppingListModal.tsx",
-          "frontend/src/hooks/useGetShoppingLists.ts",
-          "frontend/src/hooks/useAddShoppingList.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/ShoppingListPage.tsx",
-          "frontend/src/components/ShoppingListCard.tsx",
-          "frontend/src/components/ProductCard.tsx",
-          "frontend/src/components/AddShoppingListModal.tsx",
-          "frontend/src/hooks/useGetShoppingLists.ts",
-          "frontend/src/hooks/useAddShoppingList.ts"
-        ]
-      },
-      {
-        "id": "REQ-13",
-        "summary": "Implement room management interface where rooms can be added to projects, edited, and have products and costs assigned to them with per-room budget display",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/RoomsPage.tsx",
-          "frontend/src/components/RoomCard.tsx",
-          "frontend/src/components/AddRoomModal.tsx",
-          "frontend/src/hooks/useAddRoom.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/RoomsPage.tsx",
-          "frontend/src/components/RoomCard.tsx",
-          "frontend/src/components/AddRoomModal.tsx",
-          "frontend/src/hooks/useAddRoom.ts"
-        ]
-      },
-      {
-        "id": "REQ-14",
-        "summary": "Build budget overview page with automatic calculations showing total project cost, per-room breakdown, per-category breakdown (furniture, lighting, materials, appliances, decorations), and visual indicators for budget overages",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/BudgetOverviewPage.tsx",
-          "frontend/src/components/BudgetProgressBar.tsx",
-          "frontend/src/components/CategoryBudgetBreakdown.tsx",
-          "frontend/src/utils/budgetCalculations.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/BudgetOverviewPage.tsx",
-          "frontend/src/components/BudgetProgressBar.tsx",
-          "frontend/src/components/CategoryBudgetBreakdown.tsx",
-          "frontend/src/utils/budgetCalculations.ts"
-        ]
-      },
-      {
-        "id": "REQ-15",
-        "summary": "Create task management interface displaying project tasks with deadlines, statuses, and notes, allowing users to add, update status, and complete tasks",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/TasksPage.tsx",
-          "frontend/src/components/TaskCard.tsx",
-          "frontend/src/components/AddTaskModal.tsx",
-          "frontend/src/components/TaskKanbanBoard.tsx",
-          "frontend/src/hooks/useGetAllTasks.ts",
-          "frontend/src/hooks/useAddTask.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/TasksPage.tsx",
-          "frontend/src/components/TaskCard.tsx",
-          "frontend/src/components/AddTaskModal.tsx",
-          "frontend/src/components/TaskKanbanBoard.tsx",
-          "frontend/src/hooks/useGetAllTasks.ts",
-          "frontend/src/hooks/useAddTask.ts"
-        ]
-      },
-      {
-        "id": "REQ-16",
-        "summary": "Implement client portal view with read-only access to shared project elements where clients can view moodboards, product lists, budget summaries, and leave comments without editing",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/ClientPortalPage.tsx",
-          "frontend/src/components/ClientCommentBox.tsx",
-          "frontend/src/components/SharedProjectView.tsx",
-          "frontend/src/hooks/useShareProjectWithClient.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/ClientPortalPage.tsx",
-          "frontend/src/components/SharedProjectView.tsx",
-          "frontend/src/hooks/useShareProjectWithClient.ts"
-        ]
-      },
-      {
-        "id": "REQ-17",
-        "summary": "Build moodboard creation and viewing interface where users can assemble inspiration boards with items linked to actual shopping list products, showing real-time budget impact",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/MoodboardsPage.tsx",
-          "frontend/src/components/MoodboardCard.tsx",
-          "frontend/src/components/CreateMoodboardModal.tsx",
-          "frontend/src/hooks/useGetMoodboards.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/MoodboardsPage.tsx",
-          "frontend/src/components/MoodboardCard.tsx",
-          "frontend/src/hooks/useGetMoodboards.ts"
-        ]
-      },
-      {
-        "id": "REQ-18",
-        "summary": "Create logistics tracking view showing product order status pipeline from planned through ordered, in transit, delivered, to installed with ability to update status and view which items need attention",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/LogisticsPage.tsx",
-          "frontend/src/components/LogisticsStatusColumn.tsx",
-          "frontend/src/components/LogisticsProductCard.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/LogisticsPage.tsx",
-          "frontend/src/components/LogisticsStatusColumn.tsx",
-          "frontend/src/components/LogisticsProductCard.tsx"
-        ]
-      },
-      {
-        "id": "REQ-19",
-        "summary": "Implement client management interface for CRM module with list of clients, detail view showing contact information, project associations, contact history, and notes",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/ClientsPage.tsx",
-          "frontend/src/components/ClientCard.tsx",
-          "frontend/src/components/ClientDetailView.tsx",
-          "frontend/src/hooks/useGetAllUsersData.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/ClientsPage.tsx",
-          "frontend/src/components/ClientCard.tsx",
-          "frontend/src/hooks/useGetAllUsersData.ts"
-        ]
-      },
-      {
         "id": "REQ-2",
-        "summary": "Implement project management system where each project contains client data, timeline, budget, documentation, and complete material specifications",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-20",
-        "summary": "Build product library interface for managing reusable products where users can add frequently used items with all details and quickly copy them to project shopping lists",
+        "summary": "Ensure the ProfileSetupModal appears automatically for new users who have not completed their profile, and blocks access to main features until profile setup is complete",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/pages/ProductLibraryPage.tsx",
-          "frontend/src/components/LibraryProductCard.tsx",
-          "frontend/src/components/AddToLibraryModal.tsx",
-          "frontend/src/hooks/useGetProductLibrary.ts",
-          "frontend/src/hooks/useAddToProductLibrary.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/ProductLibraryPage.tsx",
-          "frontend/src/components/LibraryProductCard.tsx",
-          "frontend/src/hooks/useGetProductLibrary.ts",
-          "frontend/src/hooks/useAddToProductLibrary.ts"
-        ]
-      },
-      {
-        "id": "REQ-21",
-        "summary": "Create authentication pages for registration and login with form validation and error handling",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/LoginButton.tsx",
           "frontend/src/components/ProfileSetupModal.tsx",
-          "frontend/src/hooks/useGetCallerUserProfile.ts",
-          "frontend/src/hooks/useSaveCallerUserProfile.ts"
+          "frontend/src/App.tsx",
+          "frontend/src/hooks/useGetCallerUserProfile.ts"
         ],
         "matchedFiles": [
-          "frontend/src/components/LoginButton.tsx",
           "frontend/src/components/ProfileSetupModal.tsx",
-          "frontend/src/hooks/useGetCallerUserProfile.ts",
-          "frontend/src/hooks/useSaveCallerUserProfile.ts"
-        ]
-      },
-      {
-        "id": "REQ-22",
-        "summary": "Implement project list view showing all projects with key information (name, client, budget status, deadline) and ability to create new projects and navigate to project details",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/ProjectsPage.tsx",
-          "frontend/src/components/ProjectCard.tsx",
-          "frontend/src/components/CreateProjectModal.tsx",
-          "frontend/src/hooks/useGetMyProjects.ts",
-          "frontend/src/hooks/useAddProject.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/ProjectsPage.tsx",
-          "frontend/src/components/ProjectCard.tsx",
-          "frontend/src/components/CreateProjectModal.tsx",
-          "frontend/src/hooks/useGetMyProjects.ts",
-          "frontend/src/hooks/useAddProject.ts"
-        ]
-      },
-      {
-        "id": "REQ-23",
-        "summary": "Design a minimalist, professional visual theme with neutral colors, clean typography, and consistent spacing that works for desktop and mobile, avoiding blue and purple unless specified",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/index.css",
-          "frontend/tailwind.config.js",
-          "frontend/src/components/Layout.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/index.css",
-          "frontend/tailwind.config.js",
-          "frontend/src/components/Layout.tsx"
+          "frontend/src/App.tsx"
         ]
       },
       {
         "id": "REQ-3",
-        "summary": "Create room-based organization within projects where each room can have assigned products, costs, and notes specific to that space",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-4",
-        "summary": "Build shopping list module supporting three input methods: manual entry with all product details (name, image URL, price, shop, link, availability), import from a reusable product library, and placeholder for future external shop integration",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-5",
-        "summary": "Implement automatic budget calculation system that computes costs in real-time for entire project, individual rooms, and product categories (furniture, lighting, finishing materials, appliances, decorations) with budget overage warnings",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-6",
-        "summary": "Create task management system for tracking design, ordering, and realization tasks with deadlines, status tracking, and notes",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-7",
-        "summary": "Implement client CRM module with contact database storing client information, contact history, notes, and project associations",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-8",
-        "summary": "Build logistics tracking system where products transition through statuses: planned, ordered, in transit, delivered, and installed with full visibility of current state",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-9",
-        "summary": "Create moodboard module where inspiration boards can be built with items directly linked to products in the shopping list, showing real budget impact",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
+        "summary": "Verify that the Layout component and main application routes render correctly after authentication state changes from unauthenticated to authenticated",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/Layout.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/App.tsx"
+        ]
       }
     ]
   },
   "changedFiles": [
-    "backend/authorization/MixinAuthorization.mo",
-    "backend/authorization/access-control.mo",
-    "backend/main.mo",
     "build-request.json",
-    "build-template/Dockerfile",
-    "build-template/LICENSE",
     "build-template/README.md",
-    "build-template/deploy.sh",
-    "build-template/icp.yaml",
-    "build-template/package.json",
-    "build-template/pnpm-lock.yaml",
-    "build-template/pnpm-workspace.yaml",
-    "build-template/scripts/prune-unused-images.js",
-    "build-template/scripts/resize-images.js",
-    "build-template/src/backend/canister.yaml",
-    "build-template/src/backend/system-idl/aaaaa-aa.did",
-    "build-template/src/frontend/canister.yaml",
-    "build-template/src/frontend/components.json",
-    "build-template/src/frontend/env.json",
-    "build-template/src/frontend/eslint-rules/no-bigint-in-query-keys.js",
-    "build-template/src/frontend/eslint-rules/require-internet-identity-provider.js",
-    "build-template/src/frontend/eslint.config.js",
-    "build-template/src/frontend/package.json",
-    "build-template/src/frontend/postcss.config.js",
-    "build-template/src/frontend/src/components/ui/accordion.tsx",
-    "build-template/src/frontend/src/components/ui/alert-dialog.tsx",
-    "build-template/src/frontend/src/components/ui/alert.tsx",
-    "build-template/src/frontend/src/components/ui/aspect-ratio.tsx",
-    "build-template/src/frontend/src/components/ui/avatar.tsx",
-    "build-template/src/frontend/src/components/ui/badge.tsx",
-    "build-template/src/frontend/src/components/ui/breadcrumb.tsx",
-    "build-template/src/frontend/src/components/ui/button.tsx",
-    "build-template/src/frontend/src/components/ui/calendar.tsx",
-    "build-template/src/frontend/src/components/ui/card.tsx",
-    "build-template/src/frontend/src/components/ui/carousel.tsx",
-    "build-template/src/frontend/src/components/ui/chart.tsx",
-    "build-template/src/frontend/src/components/ui/checkbox.tsx",
-    "build-template/src/frontend/src/components/ui/collapsible.tsx",
-    "build-template/src/frontend/src/components/ui/command.tsx",
-    "build-template/src/frontend/src/components/ui/context-menu.tsx",
-    "build-template/src/frontend/src/components/ui/dialog.tsx",
-    "build-template/src/frontend/src/components/ui/drawer.tsx",
-    "build-template/src/frontend/src/components/ui/dropdown-menu.tsx",
-    "build-template/src/frontend/src/components/ui/form.tsx",
-    "build-template/src/frontend/src/components/ui/hover-card.tsx",
-    "build-template/src/frontend/src/components/ui/input-otp.tsx",
-    "build-template/src/frontend/src/components/ui/input.tsx",
-    "build-template/src/frontend/src/components/ui/label.tsx",
-    "build-template/src/frontend/src/components/ui/menubar.tsx",
-    "build-template/src/frontend/src/components/ui/navigation-menu.tsx",
-    "build-template/src/frontend/src/components/ui/pagination.tsx",
-    "build-template/src/frontend/src/components/ui/popover.tsx",
-    "build-template/src/frontend/src/components/ui/progress.tsx",
-    "build-template/src/frontend/src/components/ui/radio-group.tsx",
-    "build-template/src/frontend/src/components/ui/resizable.tsx",
-    "build-template/src/frontend/src/components/ui/scroll-area.tsx",
-    "build-template/src/frontend/src/components/ui/select.tsx",
-    "build-template/src/frontend/src/components/ui/separator.tsx",
-    "build-template/src/frontend/src/components/ui/sheet.tsx",
-    "build-template/src/frontend/src/components/ui/sidebar.tsx",
-    "build-template/src/frontend/src/components/ui/skeleton.tsx",
-    "build-template/src/frontend/src/components/ui/slider.tsx",
-    "build-template/src/frontend/src/components/ui/sonner.tsx",
-    "build-template/src/frontend/src/components/ui/switch.tsx",
-    "build-template/src/frontend/src/components/ui/table.tsx",
-    "build-template/src/frontend/src/components/ui/tabs.tsx",
-    "build-template/src/frontend/src/components/ui/textarea.tsx",
-    "build-template/src/frontend/src/components/ui/toggle-group.tsx",
-    "build-template/src/frontend/src/components/ui/toggle.tsx",
-    "build-template/src/frontend/src/components/ui/tooltip.tsx",
-    "build-template/src/frontend/src/hooks/use-mobile.tsx",
-    "build-template/src/frontend/src/lib/utils.ts",
-    "build-template/src/frontend/tsconfig.json",
-    "build-template/src/frontend/vite.config.js",
-    "build-template/tsconfig.json",
     "caffeine.lock.json",
     "feature_evidence.json",
+    "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/index.css",
-    "frontend/index.html",
     "frontend/src/App.tsx",
-    "frontend/src/backend.d.ts",
-    "frontend/src/backend.ts",
-    "frontend/src/components/AddRoomModal.tsx",
-    "frontend/src/components/AddShoppingListModal.tsx",
-    "frontend/src/components/AddTaskModal.tsx",
-    "frontend/src/components/BudgetProgressBar.tsx",
-    "frontend/src/components/BudgetSummaryCard.tsx",
-    "frontend/src/components/CategoryBudgetBreakdown.tsx",
-    "frontend/src/components/ClientCard.tsx",
-    "frontend/src/components/CreateProjectModal.tsx",
-    "frontend/src/components/Layout.tsx",
-    "frontend/src/components/LibraryProductCard.tsx",
-    "frontend/src/components/LoginButton.tsx",
-    "frontend/src/components/LogisticsProductCard.tsx",
-    "frontend/src/components/LogisticsStatusColumn.tsx",
-    "frontend/src/components/MoodboardCard.tsx",
-    "frontend/src/components/ProductCard.tsx",
     "frontend/src/components/ProfileSetupModal.tsx",
-    "frontend/src/components/ProjectCard.tsx",
-    "frontend/src/components/RoomBudgetList.tsx",
-    "frontend/src/components/RoomCard.tsx",
-    "frontend/src/components/SharedProjectView.tsx",
-    "frontend/src/components/ShoppingListCard.tsx",
-    "frontend/src/components/TaskCard.tsx",
-    "frontend/src/components/TaskKanbanBoard.tsx",
-    "frontend/src/config.ts",
-    "frontend/src/declarations/backend.did.d.ts",
-    "frontend/src/declarations/backend.did.js",
-    "frontend/src/hooks/useActor.ts",
-    "frontend/src/hooks/useAddProject.ts",
-    "frontend/src/hooks/useAddRoom.ts",
-    "frontend/src/hooks/useAddShoppingList.ts",
-    "frontend/src/hooks/useAddTask.ts",
-    "frontend/src/hooks/useAddToProductLibrary.ts",
-    "frontend/src/hooks/useGetAllTasks.ts",
-    "frontend/src/hooks/useGetAllUsersData.ts",
-    "frontend/src/hooks/useGetCallerUserProfile.ts",
-    "frontend/src/hooks/useGetMoodboards.ts",
-    "frontend/src/hooks/useGetMyProjects.ts",
-    "frontend/src/hooks/useGetProductLibrary.ts",
-    "frontend/src/hooks/useGetProject.ts",
-    "frontend/src/hooks/useGetShoppingLists.ts",
-    "frontend/src/hooks/useInternetIdentity.ts",
-    "frontend/src/hooks/useSaveCallerUserProfile.ts",
-    "frontend/src/hooks/useShareProjectWithClient.ts",
-    "frontend/src/index.css",
-    "frontend/src/main.tsx",
-    "frontend/src/pages/BudgetOverviewPage.tsx",
-    "frontend/src/pages/ClientPortalPage.tsx",
-    "frontend/src/pages/ClientsPage.tsx",
-    "frontend/src/pages/LogisticsPage.tsx",
-    "frontend/src/pages/MoodboardsPage.tsx",
-    "frontend/src/pages/ProductLibraryPage.tsx",
-    "frontend/src/pages/ProjectDashboardPage.tsx",
-    "frontend/src/pages/ProjectsPage.tsx",
-    "frontend/src/pages/RoomsPage.tsx",
-    "frontend/src/pages/ShoppingListPage.tsx",
-    "frontend/src/pages/TasksPage.tsx",
-    "frontend/src/ui-summary.json",
-    "frontend/src/utils/StorageClient.ts",
-    "frontend/src/utils/budgetCalculations.ts",
-    "frontend/src/utils/urlParams.ts",
-    "frontend/tailwind.config.js",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

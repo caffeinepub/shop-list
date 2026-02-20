@@ -1,0 +1,4 @@
+{
+  "frontend/src/App.tsx": "Main application component with routing, authentication flow, and conditional rendering for landing page, profile setup modal, and authenticated app layout with proper loading states.",
+  "frontend/src/components/ProfileSetupModal.tsx": "Modal dialog for first-time user profile setup that blocks app access until required fields (name, email, role) are completed and prevents dismissal via escape key or outside clicks."
+}

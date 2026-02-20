@@ -18,19 +18,26 @@ export default function ProfileSetupModal() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!name.trim() || !email.trim()) {
+      return;
+    }
+
     saveProfile({
       id: BigInt(Date.now()),
-      name,
-      email,
-      phone,
-      company,
+      name: name.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
+      company: company.trim(),
       role,
     });
   };
 
+  const isFormValid = name.trim() !== '' && email.trim() !== '';
+
   return (
     <Dialog open={true}>
-      <DialogContent className="sm:max-w-md" onInteractOutside={(e) => e.preventDefault()}>
+      <DialogContent className="sm:max-w-md" onInteractOutside={(e) => e.preventDefault()} onEscapeKeyDown={(e) => e.preventDefault()}>
         <DialogHeader>
           <DialogTitle>Welcome to Interior Hub</DialogTitle>
           <DialogDescription>Please complete your profile to get started</DialogDescription>
@@ -95,7 +102,7 @@ export default function ProfileSetupModal() {
             </Select>
           </div>
 
-          <Button type="submit" className="w-full" disabled={isPending}>
+          <Button type="submit" className="w-full" disabled={isPending || !isFormValid}>
             {isPending ? 'Saving...' : 'Complete Setup'}
           </Button>
         </form>
