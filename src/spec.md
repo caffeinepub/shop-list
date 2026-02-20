@@ -1,12 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Fix the authentication flow so users can access the main application after signing in with Internet Identity.
+**Goal:** Fix the infinite loading state that prevents users from accessing the Interior Design Manager application after authentication.
 
 **Planned changes:**
-- Redirect authenticated users from the landing page to the main application interface
-- Ensure ProfileSetupModal appears for new users and blocks access until profile setup is complete
-- Verify Layout component and main routes render correctly after authentication state changes
-- Fix navigation so users can access Projects, Shopping Lists, Tasks, and other main features after sign-in
+- Debug and fix the profile loading flow to prevent indefinite "Loading profile..." state
+- Verify and correct the useGetCallerUserProfile hook's loading state handling
+- Ensure backend getCallerUserProfile function returns proper responses without hanging
+- Add timeout logic and error boundary handling to provide user feedback if loading fails
 
-**User-visible outcome:** After signing in with Internet Identity, users will be able to access and navigate the main application features instead of being stuck on the landing page. New users will complete profile setup before accessing the app, while returning users go directly to the main interface.
+**User-visible outcome:** After authenticating with Internet Identity, users will successfully see either the profile setup screen (for new users) or the main application interface (for existing users), with clear error messages if loading fails.

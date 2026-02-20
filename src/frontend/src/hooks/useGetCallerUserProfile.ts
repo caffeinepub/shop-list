@@ -9,15 +9,23 @@ export function useGetCallerUserProfile() {
     queryKey: ['currentUserProfile'],
     queryFn: async () => {
       if (!actor) throw new Error('Actor not available');
-      return actor.getCallerUserProfile();
+      const result = await actor.getCallerUserProfile();
+      return result;
     },
     enabled: !!actor && !actorFetching,
-    retry: false,
+    retry: 1,
+    retryDelay: 1000,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
   });
+
+  // Custom loading state that properly reflects actor dependency
+  const isLoading = actorFetching || (!!actor && query.isLoading);
+  const isFetched = !actorFetching && !!actor && query.isFetched;
 
   return {
     ...query,
-    isLoading: actorFetching || query.isLoading,
-    isFetched: !!actor && query.isFetched,
+    isLoading,
+    isFetched,
   };
 }

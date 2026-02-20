@@ -1,72 +1,85 @@
 {
   "kind": "build_request",
-  "title": "Fix authentication flow - enable app access after sign-in",
-  "projectName": "Interior Hub",
+  "title": "Fix infinite loading state on profile page",
+  "projectName": "Interior Design Manager",
   "priority": "high",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Fix the authentication flow so users can successfully sign in with Internet Identity and access the main application features (projects, rooms, shopping lists, tasks, etc.) instead of being stuck on the landing page that shows 'Interior Hub Professional project management for interior designers Sign in to manage your projects, clients, and shopping lists'",
+      "text": "Debug and fix the infinite loading state that occurs when attempting to load the user profile. The app currently shows 'Loading profile...' indefinitely and does not progress to the main application interface.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-20"
+          "msg-4"
         ],
         "quotes": [
-          "after I open the app. I see only: \"Interior Hub Professional project management for interior designers Sign in to manage your projects, clients, and shopping lists\" but I can not open or run the app."
+          "Loading profile is loading and nothing more happend"
         ]
       },
       "acceptanceCriteria": [
-        "After clicking sign in and completing Internet Identity authentication, user is redirected to the main app interface",
-        "User can see and access the main navigation menu (Projects, Shopping Lists, Tasks, etc.)",
-        "The landing/sign-in page is no longer displayed after successful authentication",
-        "User profile data is properly loaded after authentication",
-        "First-time users are prompted to complete profile setup before accessing main features"
+        "User profile loads successfully after Internet Identity authentication",
+        "Loading state transitions to the appropriate screen (profile setup if new user, or main app if profile exists)",
+        "Loading state does not persist indefinitely",
+        "Error states are properly handled and displayed to the user if profile fetch fails"
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Ensure the ProfileSetupModal appears automatically for new users who have not completed their profile, and blocks access to main features until profile setup is complete",
+      "text": "Verify that the useGetCallerUserProfile hook properly handles the loading state sequence, ensuring that both actor initialization and profile query completion are correctly tracked before rendering the main app content.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-20"
+          "msg-4"
         ]
       },
       "acceptanceCriteria": [
-        "ProfileSetupModal displays automatically after first-time Internet Identity sign-in",
-        "Modal cannot be dismissed until user completes all required fields (name, email, role)",
-        "After profile setup completion, user is redirected to the main application interface",
-        "Returning users with completed profiles skip the setup modal entirely"
+        "The isLoading flag in useGetCallerUserProfile correctly reflects both actor and query loading states",
+        "The hook properly handles cases where the actor is ready but the profile query fails",
+        "Component consuming the hook responds appropriately to all loading and error states"
       ]
     },
     {
       "id": "REQ-3",
-      "text": "Verify that the Layout component and main application routes render correctly after authentication state changes from unauthenticated to authenticated",
-      "target": "frontend",
+      "text": "Ensure the backend getCallerUserProfile function returns the correct response format and does not hang or throw errors that could cause the frontend to remain in a loading state.",
+      "target": "backend",
       "source": {
         "messageIds": [
-          "msg-20"
+          "msg-4"
         ]
       },
       "acceptanceCriteria": [
-        "Layout component with header, navigation, and main content area renders after sign-in",
-        "Route navigation works correctly (clicking menu items navigates to correct pages)",
-        "User profile information displays in the header/navigation",
-        "No console errors related to authentication or routing"
+        "getCallerUserProfile returns successfully for authenticated users",
+        "Function returns null or empty result for users without profiles (first-time users)",
+        "No backend errors or infinite loops that prevent response completion",
+        "Response time is reasonable (completes within expected timeframe)"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Add error boundary handling and timeout logic to the profile loading flow in App.tsx to prevent indefinite loading states and provide user feedback if profile loading fails.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A timeout mechanism triggers if profile loading exceeds a reasonable duration (e.g., 10 seconds)",
+        "Clear error message is displayed to the user if profile loading fails or times out",
+        "User is provided with options to retry or take alternative actions when loading fails",
+        "Error states do not leave the app in an unusable state"
       ]
     }
   ],
   "constraints": [
-    "Do not modify backend authentication logic or main.mo",
-    "Do not change the Internet Identity integration hook (useInternetIdentity.ts)",
-    "Maintain existing routing structure defined in App.tsx"
+    "Do not modify the Internet Identity authentication flow in useInternetIdentity.ts",
+    "Preserve the existing profile setup modal functionality for first-time users",
+    "Maintain backward compatibility with existing user profiles in the backend"
   ],
   "nonGoals": [
-    "Adding new authentication methods beyond Internet Identity",
-    "Redesigning the landing page or login UI",
-    "Adding new user profile fields",
-    "Modifying backend user profile storage schema"
+    "Changing the overall authentication architecture",
+    "Redesigning the profile setup user interface",
+    "Adding new profile fields or data structures"
   ],
   "imageRequirements": {
     "required": [],

@@ -1,77 +1,75 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Fix authentication flow - enable app access after sign-in",
+  "title": "Fix infinite loading state on profile page",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Fix the authentication flow so users can successfully sign in with Internet Identity and access the main application features instead of being stuck on the landing page",
+      "summary": "Debug and fix the infinite loading state that occurs when attempting to load the user profile",
       "acceptanceCriteria": [
-        "After clicking sign in and completing Internet Identity authentication, user is redirected to the main app interface",
-        "User can see and access the main navigation menu (Projects, Shopping Lists, Tasks, etc.)",
-        "The landing/sign-in page is no longer displayed after successful authentication",
-        "User profile data is properly loaded after authentication",
-        "First-time users are prompted to complete profile setup before accessing main features"
+        "User profile loads successfully after Internet Identity authentication",
+        "Loading state transitions to the appropriate screen (profile setup if new user, or main app if profile exists)",
+        "Loading state does not persist indefinitely",
+        "Error states are properly handled and displayed to the user if profile fetch fails"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/App.tsx",
+          "path": "frontend/src/hooks/useGetCallerUserProfile.ts",
           "operation": "modify",
-          "description": "Fix the authentication flow by ensuring that after successful Internet Identity sign-in, the application properly transitions from the landing page to the main application interface. Update the conditional rendering logic to check authentication state and profile loading status correctly. Ensure that authenticated users with completed profiles are immediately shown the Layout component with main navigation instead of remaining on the landing page. Add proper state management to handle the transition from unauthenticated to authenticated state, including waiting for profile data to load before determining whether to show the profile setup modal or main app interface."
+          "description": "Review and debug the loading state logic to ensure isLoading correctly reflects both actor initialization and profile query states. Verify that the hook properly tracks when the actor is ready and the query has completed. Add error handling for cases where the actor is ready but the profile query fails. Ensure the isFetched flag is set correctly to prevent indefinite loading states."
         },
         {
-          "path": "frontend/src/components/Layout.tsx",
+          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Ensure the Layout component renders correctly after authentication state changes from unauthenticated to authenticated. Verify that the header, navigation menu, and user profile information display properly once the user is authenticated and has a completed profile. Check that all navigation links work correctly and that the component doesn't have any blocking conditions that prevent it from rendering after sign-in."
+          "description": "Debug the profile loading flow in the main App component. Verify that the component correctly consumes the useGetCallerUserProfile hook and responds to all loading, error, and success states. Ensure the conditional rendering logic for showProfileSetup correctly evaluates isAuthenticated, profileLoading, isFetched, and userProfile. Add console logging or debugging to track the state transitions during profile loading."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Ensure the ProfileSetupModal appears automatically for new users who have not completed their profile, and blocks access to main features until profile setup is complete",
+      "summary": "Verify that the useGetCallerUserProfile hook properly handles the loading state sequence",
       "acceptanceCriteria": [
-        "ProfileSetupModal displays automatically after first-time Internet Identity sign-in",
-        "Modal cannot be dismissed until user completes all required fields (name, email, role)",
-        "After profile setup completion, user is redirected to the main application interface",
-        "Returning users with completed profiles skip the setup modal entirely"
+        "The isLoading flag in useGetCallerUserProfile correctly reflects both actor and query loading states",
+        "The hook properly handles cases where the actor is ready but the profile query fails",
+        "Component consuming the hook responds appropriately to all loading and error states"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/ProfileSetupModal.tsx",
+          "path": "frontend/src/hooks/useGetCallerUserProfile.ts",
           "operation": "modify",
-          "description": "Ensure the ProfileSetupModal properly blocks user access to main features until profile setup is complete by making it non-dismissible. Verify that all required fields (name, email, role) must be filled before submission is allowed. After successful profile submission via useSaveCallerUserProfile, ensure the modal closes and the user is immediately shown the main application interface. Add proper form validation to prevent submission with incomplete data."
+          "description": "Ensure the custom isLoading calculation correctly combines actorFetching and query.isLoading states. Verify that the enabled flag properly prevents the query from running before the actor is ready. Add proper error handling and retry logic configuration. Ensure isFetched is only true when both the actor is available and the query has completed."
         },
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Fix the logic that determines when to show the ProfileSetupModal. Use the pattern from the authorization component usage: `const showProfileSetup = isAuthenticated && !profileLoading && isFetched && userProfile === null;`. Ensure the modal displays automatically for authenticated users without a profile, blocks access to the main Layout until profile is saved, and that returning users with completed profiles bypass the modal entirely and go straight to the main app interface."
-        },
-        {
-          "path": "frontend/src/hooks/useGetCallerUserProfile.ts",
-          "operation": "modify",
-          "description": "Verify the hook implementation follows the authorization component pattern to prevent profile setup modal flash. Ensure it returns custom state with `isLoading: actorFetching || query.isLoading` and `isFetched: !!actor && query.isFetched` to properly coordinate the actor dependency with query state. This prevents the modal from appearing prematurely before the actor is ready."
+          "description": "Verify the component correctly uses all returned values from useGetCallerUserProfile including isLoading, isFetched, error, and data. Ensure the loading state check prevents rendering the main app until profile loading is complete. Add error state handling to display user-friendly messages when profile loading fails."
         }
       ]
     },
     {
-      "id": "REQ-3",
-      "summary": "Verify that the Layout component and main application routes render correctly after authentication state changes from unauthenticated to authenticated",
+      "id": "REQ-4",
+      "summary": "Add error boundary handling and timeout logic to the profile loading flow to prevent indefinite loading states",
       "acceptanceCriteria": [
-        "Layout component with header, navigation, and main content area renders after sign-in",
-        "Route navigation works correctly (clicking menu items navigates to correct pages)",
-        "User profile information displays in the header/navigation",
-        "No console errors related to authentication or routing"
+        "A timeout mechanism triggers if profile loading exceeds a reasonable duration (e.g., 10 seconds)",
+        "Clear error message is displayed to the user if profile loading fails or times out",
+        "User is provided with options to retry or take alternative actions when loading fails",
+        "Error states do not leave the app in an unusable state"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/Layout.tsx",
+          "path": "frontend/src/hooks/useGetCallerUserProfile.ts",
           "operation": "modify",
-          "description": "Verify that the Layout component correctly handles the authentication state transition and renders all child components (header, navigation, main content) properly after a user successfully signs in. Check that the user profile information from useGetCallerUserProfile displays correctly in the header/navigation area. Ensure no blocking conditions or missing data checks prevent the Layout from rendering after authentication. Add console logging if needed to debug any rendering issues during the authentication flow transition."
+          "description": "Add timeout logic to the query configuration using staleTime and cacheTime options. Configure the query with a reasonable timeout duration (10 seconds). Ensure proper error handling returns meaningful error objects that can be displayed to the user. Consider adding a retry mechanism with exponential backoff for transient failures."
         },
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Verify that the TanStack Router properly initializes and renders routes after authentication state changes. Ensure that route components (Projects, Shopping Lists, Tasks, etc.) are accessible and render correctly once the user is authenticated and has completed profile setup. Check that navigation between routes works smoothly without errors. Verify that the router context is properly set up and that all route links function correctly after sign-in."
+          "description": "Add error boundary handling for the profile loading flow. Display clear error messages to the user when profile loading fails or times out. Provide a retry button that allows users to attempt loading their profile again using the refetch function from useGetCallerUserProfile. Ensure the error state displays actionable feedback and does not leave the app in an unusable state. Add a fallback UI that allows users to logout if profile loading continues to fail."
+        },
+        {
+          "path": "frontend/src/components/ProfileLoadingError.tsx",
+          "operation": "create",
+          "description": "Create a new error component that displays when profile loading fails or times out. Include a clear error message explaining the issue, a retry button that calls the refetch function, and a logout button as an alternative action. Style the component consistently with the application design system using Tailwind CSS classes. Accept error message and retry callback as props."
         }
       ]
     }

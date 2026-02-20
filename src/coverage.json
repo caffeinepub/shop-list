@@ -1,64 +1,75 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-20T21:20:04.614Z",
+  "generatedAt": "2026-02-20T21:30:25.586Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 3,
+    "total": 4,
     "implemented": 3,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Fix the authentication flow so users can successfully sign in with Internet Identity and access the main application features (projects, rooms, shopping lists, tasks, etc.) instead of being stuck on the landing page that shows 'Interior Hub Professional project management for interior designers Sign in to manage your projects, clients, and shopping lists'",
+        "summary": "Debug and fix the infinite loading state that occurs when attempting to load the user profile. The app currently shows 'Loading profile...' indefinitely and does not progress to the main application interface.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/App.tsx",
-          "frontend/src/components/Layout.tsx"
+          "frontend/src/hooks/useGetCallerUserProfile.ts",
+          "frontend/src/App.tsx"
         ],
         "matchedFiles": [
+          "frontend/src/hooks/useGetCallerUserProfile.ts",
           "frontend/src/App.tsx"
         ]
       },
       {
         "id": "REQ-2",
-        "summary": "Ensure the ProfileSetupModal appears automatically for new users who have not completed their profile, and blocks access to main features until profile setup is complete",
+        "summary": "Verify that the useGetCallerUserProfile hook properly handles the loading state sequence, ensuring that both actor initialization and profile query completion are correctly tracked before rendering the main app content.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/ProfileSetupModal.tsx",
-          "frontend/src/App.tsx",
-          "frontend/src/hooks/useGetCallerUserProfile.ts"
+          "frontend/src/hooks/useGetCallerUserProfile.ts",
+          "frontend/src/App.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/ProfileSetupModal.tsx",
+          "frontend/src/hooks/useGetCallerUserProfile.ts",
           "frontend/src/App.tsx"
         ]
       },
       {
         "id": "REQ-3",
-        "summary": "Verify that the Layout component and main application routes render correctly after authentication state changes from unauthenticated to authenticated",
+        "summary": "Ensure the backend getCallerUserProfile function returns the correct response format and does not hang or throw errors that could cause the frontend to remain in a loading state.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-4",
+        "summary": "Add error boundary handling and timeout logic to the profile loading flow in App.tsx to prevent indefinite loading states and provide user feedback if profile loading fails.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/Layout.tsx",
-          "frontend/src/App.tsx"
+          "frontend/src/hooks/useGetCallerUserProfile.ts",
+          "frontend/src/App.tsx",
+          "frontend/src/components/ProfileLoadingError.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/App.tsx"
+          "frontend/src/hooks/useGetCallerUserProfile.ts",
+          "frontend/src/App.tsx",
+          "frontend/src/components/ProfileLoadingError.tsx"
         ]
       }
     ]
   },
   "changedFiles": [
+    "backend/main.mo",
     "build-request.json",
-    "build-template/README.md",
-    "caffeine.lock.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
     "frontend/src/App.tsx",
-    "frontend/src/components/ProfileSetupModal.tsx",
+    "frontend/src/components/LoginButton.tsx",
+    "frontend/src/components/ProfileLoadingError.tsx",
+    "frontend/src/hooks/useGetCallerUserProfile.ts",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

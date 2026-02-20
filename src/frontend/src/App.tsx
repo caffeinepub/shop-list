@@ -15,13 +15,29 @@ import LogisticsPage from './pages/LogisticsPage';
 import ClientsPage from './pages/ClientsPage';
 import ProductLibraryPage from './pages/ProductLibraryPage';
 import ClientPortalPage from './pages/ClientPortalPage';
+import ProfileLoadingError from './components/ProfileLoadingError';
+import { useEffect, useState } from 'react';
 
 function RootComponent() {
   const { identity, loginStatus } = useInternetIdentity();
-  const { data: userProfile, isLoading: profileLoading, isFetched } = useGetCallerUserProfile();
+  const { data: userProfile, isLoading: profileLoading, isFetched, error, refetch } = useGetCallerUserProfile();
+  const [loadingTimeout, setLoadingTimeout] = useState(false);
 
   const isAuthenticated = !!identity;
   const showProfileSetup = isAuthenticated && !profileLoading && isFetched && userProfile === null;
+
+  // Timeout mechanism for profile loading
+  useEffect(() => {
+    if (isAuthenticated && profileLoading) {
+      const timer = setTimeout(() => {
+        setLoadingTimeout(true);
+      }, 10000); // 10 second timeout
+
+      return () => clearTimeout(timer);
+    } else {
+      setLoadingTimeout(false);
+    }
+  }, [isAuthenticated, profileLoading]);
 
   if (loginStatus === 'initializing') {
     return (
@@ -50,6 +66,19 @@ function RootComponent() {
           </div>
         </div>
       </div>
+    );
+  }
+
+  // Show error state if loading times out or there's an error
+  if (isAuthenticated && (error || loadingTimeout)) {
+    return (
+      <ProfileLoadingError
+        error={error ? String(error) : 'Profile loading timed out'}
+        onRetry={() => {
+          setLoadingTimeout(false);
+          refetch();
+        }}
+      />
     );
   }
 

@@ -1,4 +1,7 @@
 {
-  "frontend/src/App.tsx": "Main application component with routing, authentication flow, and conditional rendering for landing page, profile setup modal, and authenticated app layout with proper loading states.",
-  "frontend/src/components/ProfileSetupModal.tsx": "Modal dialog for first-time user profile setup that blocks app access until required fields (name, email, role) are completed and prevents dismissal via escape key or outside clicks."
+  "frontend/src/App.tsx": "Main application component with routing, authentication flow, profile loading with timeout detection, error handling, and conditional rendering for landing page, profile setup modal, and authenticated app layout.",
+  "frontend/src/components/ProfileSetupModal.tsx": "Modal dialog for first-time user profile setup that blocks app access until required fields (name, email, role) are completed and prevents dismissal via escape key or outside clicks.",
+  "frontend/src/hooks/useGetCallerUserProfile.ts": "React Query hook that fetches the current user's profile from the backend with proper loading state management, retry logic, and timeout handling.",
+  "frontend/src/components/ProfileLoadingError.tsx": "Error component that displays when profile loading fails or times out, providing retry and logout options with clear user feedback.",
+  "frontend/src/components/LoginButton.tsx": "Reusable authentication button component that handles login/logout with Internet Identity, displays loading states, and clears cached data on logout."
 }

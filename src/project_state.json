@@ -1,46 +1,49 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "Interior design project management app with projects, rooms, shopping lists, budget tracking, product status workflow, client portal, and task management. User cannot access main app - stuck on sign-in page.",
-  "architectural_notes": [
-    "App includes authentication/sign-in system",
-    "Core features: project management, room organization, shopping lists, budget tracking",
-    "Product workflow: planned → ordered → delivered → installed",
-    "Client portal for sharing project details",
-    "Dark/light mode support"
-  ],
+  "summary": "Interior design project management application",
+  "architectural_notes": [],
   "known_issues": [
-    "User cannot proceed past sign-in/landing page - no way to access main app functionality"
+    "Loading profile screen shows indefinitely - app doesn't progress beyond loading state"
   ],
   "isFixRequest": true,
   "existing_features": [
     {
-      "id": "feature-fix-the-authentication-flow-so-users-can-successfully-sign-in-with-internet-identity-and-access-the-main-application-features-projects-rooms-shopping-lists-tasks-etc-instead-of-being-stuck-on-the-landing-page-that-shows-interior-hub-professional-project-management-for-interior-designers-sign-in-to-manage-your-projects-clients-and-shopping-lists",
-      "title": "Fix the authentication flow so users can successfully sign in with Internet Identity and access the main application features (projects, rooms, shopping lists, tasks, etc.) instead of being stuck on the landing page that shows 'Interior Hub Professional project management for interior designers Sign in to manage your projects, clients, and shopping lists'",
+      "id": "feature-debug-and-fix-the-infinite-loading-state-that-occurs-when-attempting-to-load-the-user-profile-the-app-currently-shows-loading-profile-indefinitely-and-does-not-progress-to-the-main-application-interface",
+      "title": "Debug and fix the infinite loading state that occurs when attempting to load the user profile. The app currently shows 'Loading profile...' indefinitely and does not progress to the main application interface.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-ensure-the-profilesetupmodal-appears-automatically-for-new-users-who-have-not-completed-their-profile-and-blocks-access-to-main-features-until-profile-setup-is-complete",
-      "title": "Ensure the ProfileSetupModal appears automatically for new users who have not completed their profile, and blocks access to main features until profile setup is complete",
+      "id": "feature-verify-that-the-usegetcalleruserprofile-hook-properly-handles-the-loading-state-sequence-ensuring-that-both-actor-initialization-and-profile-query-completion-are-correctly-tracked-before-rendering-the-main-app-content",
+      "title": "Verify that the useGetCallerUserProfile hook properly handles the loading state sequence, ensuring that both actor initialization and profile query completion are correctly tracked before rendering the main app content.",
       "reqIds": [
         "REQ-2"
       ],
       "version": 1
     },
     {
-      "id": "feature-verify-that-the-layout-component-and-main-application-routes-render-correctly-after-authentication-state-changes-from-unauthenticated-to-authenticated",
-      "title": "Verify that the Layout component and main application routes render correctly after authentication state changes from unauthenticated to authenticated",
+      "id": "feature-add-error-boundary-handling-and-timeout-logic-to-the-profile-loading-flow-in-app-tsx-to-prevent-indefinite-loading-states-and-provide-user-feedback-if-profile-loading-fails",
+      "title": "Add error boundary handling and timeout logic to the profile loading flow in App.tsx to prevent indefinite loading states and provide user feedback if profile loading fails.",
       "reqIds": [
-        "REQ-3"
+        "REQ-4"
       ],
       "version": 1
     }
   ],
-  "new_feature_requests": [],
-  "projectName": "Interior Hub",
+  "new_feature_requests": [
+    {
+      "id": "AR-3",
+      "summary": "Ensure the backend getCallerUserProfile function returns the correct response format and does not hang or throw errors that could cause the frontend to remain in a loading state.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Interior Design Manager",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

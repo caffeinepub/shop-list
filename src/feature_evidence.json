@@ -2,10 +2,11 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-fix-the-authentication-flow-so-users-can-successfully-sign-in-with-internet-identity-and-access-the-main-application-features-projects-rooms-shopping-lists-tasks-etc-instead-of-being-stuck-on-the-landing-page-that-shows-interior-hub-professional-project-management-for-interior-designers-sign-in-to-manage-your-projects-clients-and-shopping-lists",
-      "featureTitle": "Fix the authentication flow so users can successfully sign in with Internet Identity and access the main application features (projects, rooms, shopping lists, tasks, etc.) instead of being stuck on the landing page that shows 'Interior Hub Professional project management for interior designers Sign in to manage your projects, clients, and shopping lists'",
+      "featureId": "feature-debug-and-fix-the-infinite-loading-state-that-occurs-when-attempting-to-load-the-user-profile-the-app-currently-shows-loading-profile-indefinitely-and-does-not-progress-to-the-main-application-interface",
+      "featureTitle": "Debug and fix the infinite loading state that occurs when attempting to load the user profile. The app currently shows 'Loading profile...' indefinitely and does not progress to the main application interface.",
       "files": [
-        "frontend/src/App.tsx"
+        "frontend/src/App.tsx",
+        "frontend/src/hooks/useGetCallerUserProfile.ts"
       ],
       "components": [
         "authorization@4.0.0",
@@ -21,11 +22,11 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-profilesetupmodal-appears-automatically-for-new-users-who-have-not-completed-their-profile-and-blocks-access-to-main-features-until-profile-setup-is-complete",
-      "featureTitle": "Ensure the ProfileSetupModal appears automatically for new users who have not completed their profile, and blocks access to main features until profile setup is complete",
+      "featureId": "feature-verify-that-the-usegetcalleruserprofile-hook-properly-handles-the-loading-state-sequence-ensuring-that-both-actor-initialization-and-profile-query-completion-are-correctly-tracked-before-rendering-the-main-app-content",
+      "featureTitle": "Verify that the useGetCallerUserProfile hook properly handles the loading state sequence, ensuring that both actor initialization and profile query completion are correctly tracked before rendering the main app content.",
       "files": [
         "frontend/src/App.tsx",
-        "frontend/src/components/ProfileSetupModal.tsx"
+        "frontend/src/hooks/useGetCallerUserProfile.ts"
       ],
       "components": [
         "authorization@4.0.0",
@@ -41,10 +42,12 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-verify-that-the-layout-component-and-main-application-routes-render-correctly-after-authentication-state-changes-from-unauthenticated-to-authenticated",
-      "featureTitle": "Verify that the Layout component and main application routes render correctly after authentication state changes from unauthenticated to authenticated",
+      "featureId": "feature-add-error-boundary-handling-and-timeout-logic-to-the-profile-loading-flow-in-app-tsx-to-prevent-indefinite-loading-states-and-provide-user-feedback-if-profile-loading-fails",
+      "featureTitle": "Add error boundary handling and timeout logic to the profile loading flow in App.tsx to prevent indefinite loading states and provide user feedback if profile loading fails.",
       "files": [
-        "frontend/src/App.tsx"
+        "frontend/src/App.tsx",
+        "frontend/src/components/ProfileLoadingError.tsx",
+        "frontend/src/hooks/useGetCallerUserProfile.ts"
       ],
       "components": [
         "authorization@4.0.0",
@@ -55,7 +58,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-3"
+        "REQ-4"
       ],
       "confidence": "high"
     }
