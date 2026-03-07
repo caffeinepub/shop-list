@@ -1,4 +1,4 @@
-import { Project, Room } from '../backend';
+import { type Project, Room } from "../backend";
 
 export function calculateTotalSpent(project: Project): bigint {
   let total = BigInt(0);
@@ -20,7 +20,7 @@ export function calculateRoomBudgets(project: Project): Array<{
   return project.rooms.map((room) => {
     const spent = room.products.reduce(
       (sum, product) => sum + Number(product.price) * Number(product.quantity),
-      0
+      0,
     );
     return {
       id: room.id,
@@ -32,12 +32,14 @@ export function calculateRoomBudgets(project: Project): Array<{
   });
 }
 
-export function calculateCategoryBudgets(project: Project): Record<string, number> {
+export function calculateCategoryBudgets(
+  project: Project,
+): Record<string, number> {
   const categories: Record<string, number> = {};
 
   for (const room of project.rooms) {
     for (const product of room.products) {
-      const category = room.category || 'Uncategorized';
+      const category = room.category || "Uncategorized";
       const cost = Number(product.price) * Number(product.quantity);
       categories[category] = (categories[category] || 0) + cost;
     }
@@ -46,7 +48,10 @@ export function calculateCategoryBudgets(project: Project): Record<string, numbe
   return categories;
 }
 
-export function calculateBudgetPercentage(spent: bigint, budget: bigint): number {
+export function calculateBudgetPercentage(
+  spent: bigint,
+  budget: bigint,
+): number {
   if (budget === BigInt(0)) return 0;
   return (Number(spent) / Number(budget)) * 100;
 }

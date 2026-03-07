@@ -15,6 +15,10 @@ export default {
             }
         },
         extend: {
+            fontFamily: {
+                display: ['"Cabinet Grotesk"', 'system-ui', 'sans-serif'],
+                sans: ['"General Sans"', 'system-ui', 'sans-serif'],
+            },
             colors: {
                 border: 'oklch(var(--border))',
                 input: 'oklch(var(--input))',

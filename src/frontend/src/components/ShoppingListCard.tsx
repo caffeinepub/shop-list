@@ -1,16 +1,18 @@
-import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Badge } from './ui/badge';
-import { Button } from './ui/button';
-import { ChevronDown, ChevronUp, Store } from 'lucide-react';
-import { ShoppingList } from '../backend';
-import ProductCard from './ProductCard';
+import { ChevronDown, ChevronUp, Store } from "lucide-react";
+import { useState } from "react";
+import type { ShoppingList } from "../backend";
+import ProductCard from "./ProductCard";
+import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 interface ShoppingListCardProps {
   shoppingList: ShoppingList;
 }
 
-export default function ShoppingListCard({ shoppingList }: ShoppingListCardProps) {
+export default function ShoppingListCard({
+  shoppingList,
+}: ShoppingListCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -21,7 +23,9 @@ export default function ShoppingListCard({ shoppingList }: ShoppingListCardProps
             <CardTitle className="text-xl">{shoppingList.name}</CardTitle>
             <div className="flex items-center gap-2 mt-2">
               <Store className="w-4 h-4 text-muted-foreground" />
-              <span className="text-sm text-muted-foreground">{shoppingList.shop}</span>
+              <span className="text-sm text-muted-foreground">
+                {shoppingList.shop}
+              </span>
             </div>
           </div>
           <Badge>{shoppingList.status}</Badge>
@@ -31,15 +35,21 @@ export default function ShoppingListCard({ shoppingList }: ShoppingListCardProps
         <div className="grid grid-cols-3 gap-4">
           <div>
             <p className="text-sm text-muted-foreground">Total</p>
-            <p className="text-lg font-bold text-foreground">${Number(shoppingList.total).toLocaleString()}</p>
+            <p className="text-lg font-bold text-foreground">
+              ${Number(shoppingList.total).toLocaleString()}
+            </p>
           </div>
           <div>
             <p className="text-sm text-muted-foreground">Discount</p>
-            <p className="text-lg font-bold text-foreground">{Number(shoppingList.discount)}%</p>
+            <p className="text-lg font-bold text-foreground">
+              {Number(shoppingList.discount)}%
+            </p>
           </div>
           <div>
             <p className="text-sm text-muted-foreground">Products</p>
-            <p className="text-lg font-bold text-foreground">{shoppingList.products.length}</p>
+            <p className="text-lg font-bold text-foreground">
+              {shoppingList.products.length}
+            </p>
           </div>
         </div>
 
@@ -51,7 +61,11 @@ export default function ShoppingListCard({ shoppingList }: ShoppingListCardProps
               className="w-full justify-between"
             >
               <span>View Products</span>
-              {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+              {isExpanded ? (
+                <ChevronUp className="w-4 h-4" />
+              ) : (
+                <ChevronDown className="w-4 h-4" />
+              )}
             </Button>
 
             {isExpanded && (

@@ -1,13 +1,13 @@
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import TaskCard from './TaskCard';
-import { Task } from '../backend';
+import type { Task } from "../backend";
+import TaskCard from "./TaskCard";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 interface TaskKanbanBoardProps {
   tasks: Task[];
 }
 
 export default function TaskKanbanBoard({ tasks }: TaskKanbanBoardProps) {
-  const statuses = ['pending', 'in progress', 'completed'];
+  const statuses = ["pending", "in progress", "completed"];
 
   const tasksByStatus = statuses.map((status) => ({
     status,
@@ -21,14 +21,20 @@ export default function TaskKanbanBoard({ tasks }: TaskKanbanBoardProps) {
           <CardHeader>
             <CardTitle className="capitalize flex items-center justify-between">
               <span>{status}</span>
-              <span className="text-sm font-normal text-muted-foreground">({tasks.length})</span>
+              <span className="text-sm font-normal text-muted-foreground">
+                ({tasks.length})
+              </span>
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             {tasks.length > 0 ? (
-              tasks.map((task) => <TaskCard key={task.id.toString()} task={task} />)
+              tasks.map((task) => (
+                <TaskCard key={task.id.toString()} task={task} />
+              ))
             ) : (
-              <p className="text-center text-muted-foreground py-8 text-sm">No tasks</p>
+              <p className="text-center text-muted-foreground py-8 text-sm">
+                No tasks
+              </p>
             )}
           </CardContent>
         </Card>

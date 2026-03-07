@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Mail, Phone, Building, Briefcase } from 'lucide-react';
-import { AllUserData } from '../backend';
+import { Briefcase, Building, Mail, Phone } from "lucide-react";
+import type { AllUserData } from "../backend";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 interface ClientCardProps {
   clientData: AllUserData;
@@ -14,11 +14,15 @@ export default function ClientCard({ clientData }: ClientCardProps) {
       <CardHeader>
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-            <span className="text-primary font-bold text-lg">{userProfile.name.charAt(0).toUpperCase()}</span>
+            <span className="text-primary font-bold text-lg">
+              {userProfile.name.charAt(0).toUpperCase()}
+            </span>
           </div>
           <div>
             <CardTitle className="text-xl">{userProfile.name}</CardTitle>
-            <p className="text-sm text-muted-foreground capitalize">{userProfile.role}</p>
+            <p className="text-sm text-muted-foreground capitalize">
+              {userProfile.role}
+            </p>
           </div>
         </div>
       </CardHeader>
@@ -50,7 +54,9 @@ export default function ClientCard({ clientData }: ClientCardProps) {
               <Briefcase className="w-4 h-4" />
               <span className="text-sm">Projects</span>
             </div>
-            <span className="font-medium text-foreground">{projects.length}</span>
+            <span className="font-medium text-foreground">
+              {projects.length}
+            </span>
           </div>
         </div>
       </CardContent>

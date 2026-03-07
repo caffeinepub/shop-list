@@ -1,5 +1,5 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useActor } from './useActor';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useActor } from "./useActor";
 
 export function useAddTask() {
   const { actor } = useActor();
@@ -17,7 +17,7 @@ export function useAddTask() {
       type_: string;
       assigned: string;
     }) => {
-      if (!actor) throw new Error('Actor not available');
+      if (!actor) throw new Error("Actor not available");
       return actor.addTask(
         params.id,
         params.title,
@@ -27,11 +27,13 @@ export function useAddTask() {
         params.projectId,
         params.roomId,
         params.type_,
-        params.assigned
+        params.assigned,
       );
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['tasks', variables.projectId.toString()] });
+      queryClient.invalidateQueries({
+        queryKey: ["tasks", variables.projectId.toString()],
+      });
     },
   });
 }

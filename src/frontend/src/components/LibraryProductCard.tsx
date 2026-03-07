@@ -1,35 +1,47 @@
-import { Card, CardContent } from './ui/card';
-import { Button } from './ui/button';
-import { Badge } from './ui/badge';
-import { Copy, Package } from 'lucide-react';
-import { ProductLibrary } from '../backend';
+import { Copy, Package } from "lucide-react";
+import type { ProductLibrary } from "../backend";
+import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
+import { Card, CardContent } from "./ui/card";
 
 interface LibraryProductCardProps {
   product: ProductLibrary;
 }
 
-export default function LibraryProductCard({ product }: LibraryProductCardProps) {
+export default function LibraryProductCard({
+  product,
+}: LibraryProductCardProps) {
   return (
     <Card>
       <div className="aspect-square bg-muted flex items-center justify-center overflow-hidden">
         {product.image ? (
-          <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-full object-cover"
+          />
         ) : (
           <Package className="w-12 h-12 text-muted-foreground" />
         )}
       </div>
       <CardContent className="p-4 space-y-3">
         <div>
-          <h4 className="font-medium text-foreground line-clamp-2">{product.name}</h4>
+          <h4 className="font-medium text-foreground line-clamp-2">
+            {product.name}
+          </h4>
           <p className="text-sm text-muted-foreground mt-1">{product.shop}</p>
         </div>
 
         {product.description && (
-          <p className="text-sm text-muted-foreground line-clamp-2">{product.description}</p>
+          <p className="text-sm text-muted-foreground line-clamp-2">
+            {product.description}
+          </p>
         )}
 
         <div className="flex items-center justify-between">
-          <p className="font-bold text-foreground">${Number(product.price).toLocaleString()}</p>
+          <p className="font-bold text-foreground">
+            ${Number(product.price).toLocaleString()}
+          </p>
           <Badge variant="secondary">{product.type}</Badge>
         </div>
 

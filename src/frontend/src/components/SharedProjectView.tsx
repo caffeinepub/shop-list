@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Calendar, DollarSign } from 'lucide-react';
-import { Project } from '../backend';
-import { calculateTotalSpent } from '../utils/budgetCalculations';
+import { Calendar, DollarSign } from "lucide-react";
+import type { Project } from "../backend";
+import { calculateTotalSpent } from "../utils/budgetCalculations";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 interface SharedProjectViewProps {
   project: Project;
@@ -24,7 +24,8 @@ export default function SharedProjectView({ project }: SharedProjectViewProps) {
           <div className="flex items-center gap-2 text-muted-foreground">
             <DollarSign className="w-4 h-4" />
             <span>
-              Budget: ${Number(totalSpent).toLocaleString()} / ${Number(project.budget).toLocaleString()}
+              Budget: ${Number(totalSpent).toLocaleString()} / $
+              {Number(project.budget).toLocaleString()}
             </span>
           </div>
         </div>
@@ -43,7 +44,8 @@ export default function SharedProjectView({ project }: SharedProjectViewProps) {
 
         <div className="pt-4 border-t border-border">
           <p className="text-sm text-muted-foreground italic">
-            This is a read-only view. Contact your designer for changes or questions.
+            This is a read-only view. Contact your designer for changes or
+            questions.
           </p>
         </div>
       </CardContent>

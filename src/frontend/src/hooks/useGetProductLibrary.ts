@@ -1,12 +1,12 @@
-import { useQuery } from '@tanstack/react-query';
-import { useActor } from './useActor';
-import { ProductLibrary } from '../backend';
+import { useQuery } from "@tanstack/react-query";
+import type { ProductLibrary } from "../backend";
+import { useActor } from "./useActor";
 
 export function useGetProductLibrary() {
   const { actor, isFetching } = useActor();
 
   return useQuery<ProductLibrary[]>({
-    queryKey: ['productLibrary'],
+    queryKey: ["productLibrary"],
     queryFn: async () => {
       if (!actor) return [];
       return actor.getProductLibrary();

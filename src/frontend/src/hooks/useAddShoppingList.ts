@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useActor } from './useActor';
-import { Product } from '../backend';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { Product } from "../backend";
+import { useActor } from "./useActor";
 
 export function useAddShoppingList() {
   const { actor } = useActor();
@@ -16,7 +16,7 @@ export function useAddShoppingList() {
       products: Product[];
       status: string;
     }) => {
-      if (!actor) throw new Error('Actor not available');
+      if (!actor) throw new Error("Actor not available");
       return actor.addShoppingList(
         params.id,
         params.name,
@@ -24,11 +24,11 @@ export function useAddShoppingList() {
         params.discount,
         params.shop,
         params.products,
-        params.status
+        params.status,
       );
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['shoppingLists'] });
+      queryClient.invalidateQueries({ queryKey: ["shoppingLists"] });
     },
   });
 }

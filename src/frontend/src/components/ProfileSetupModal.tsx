@@ -1,24 +1,36 @@
-import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { useSaveCallerUserProfile } from '../hooks/useSaveCallerUserProfile';
-import { Role } from '../backend';
+import { useState } from "react";
+import { Role } from "../backend";
+import { useSaveCallerUserProfile } from "../hooks/useSaveCallerUserProfile";
+import { Button } from "./ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 export default function ProfileSetupModal() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [company, setCompany] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [company, setCompany] = useState("");
   const [role, setRole] = useState<Role>(Role.designer);
 
   const { mutate: saveProfile, isPending } = useSaveCallerUserProfile();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!name.trim() || !email.trim()) {
       return;
     }
@@ -33,14 +45,20 @@ export default function ProfileSetupModal() {
     });
   };
 
-  const isFormValid = name.trim() !== '' && email.trim() !== '';
+  const isFormValid = name.trim() !== "" && email.trim() !== "";
 
   return (
     <Dialog open={true}>
-      <DialogContent className="sm:max-w-md" onInteractOutside={(e) => e.preventDefault()} onEscapeKeyDown={(e) => e.preventDefault()}>
+      <DialogContent
+        className="sm:max-w-md"
+        onInteractOutside={(e) => e.preventDefault()}
+        onEscapeKeyDown={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>Welcome to Interior Hub</DialogTitle>
-          <DialogDescription>Please complete your profile to get started</DialogDescription>
+          <DialogDescription>
+            Please complete your profile to get started
+          </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
@@ -89,7 +107,10 @@ export default function ProfileSetupModal() {
 
           <div className="space-y-2">
             <Label htmlFor="role">Role *</Label>
-            <Select value={role} onValueChange={(value) => setRole(value as Role)}>
+            <Select
+              value={role}
+              onValueChange={(value) => setRole(value as Role)}
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -102,8 +123,12 @@ export default function ProfileSetupModal() {
             </Select>
           </div>
 
-          <Button type="submit" className="w-full" disabled={isPending || !isFormValid}>
-            {isPending ? 'Saving...' : 'Complete Setup'}
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={isPending || !isFormValid}
+          >
+            {isPending ? "Saving..." : "Complete Setup"}
           </Button>
         </form>
       </DialogContent>

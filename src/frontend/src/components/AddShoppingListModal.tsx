@@ -1,19 +1,28 @@
-import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { useAddShoppingList } from '../hooks/useAddShoppingList';
+import { useState } from "react";
+import { useAddShoppingList } from "../hooks/useAddShoppingList";
+import { Button } from "./ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
 
 interface AddShoppingListModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export default function AddShoppingListModal({ open, onOpenChange }: AddShoppingListModalProps) {
-  const [name, setName] = useState('');
-  const [shop, setShop] = useState('');
-  const [discount, setDiscount] = useState('');
+export default function AddShoppingListModal({
+  open,
+  onOpenChange,
+}: AddShoppingListModalProps) {
+  const [name, setName] = useState("");
+  const [shop, setShop] = useState("");
+  const [discount, setDiscount] = useState("");
 
   const { mutate: addShoppingList, isPending } = useAddShoppingList();
 
@@ -24,19 +33,19 @@ export default function AddShoppingListModal({ open, onOpenChange }: AddShopping
         id: BigInt(Date.now()),
         name,
         total: BigInt(0),
-        discount: BigInt(discount || '0'),
+        discount: BigInt(discount || "0"),
         shop,
         products: [],
-        status: 'Draft',
+        status: "Draft",
       },
       {
         onSuccess: () => {
-          setName('');
-          setShop('');
-          setDiscount('');
+          setName("");
+          setShop("");
+          setDiscount("");
           onOpenChange(false);
         },
-      }
+      },
     );
   };
 
@@ -45,7 +54,9 @@ export default function AddShoppingListModal({ open, onOpenChange }: AddShopping
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Create Shopping List</DialogTitle>
-          <DialogDescription>Create a new shopping list for products</DialogDescription>
+          <DialogDescription>
+            Create a new shopping list for products
+          </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
@@ -81,11 +92,16 @@ export default function AddShoppingListModal({ open, onOpenChange }: AddShopping
           </div>
 
           <div className="flex gap-3 pt-4">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="flex-1">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+              className="flex-1"
+            >
               Cancel
             </Button>
             <Button type="submit" disabled={isPending} className="flex-1">
-              {isPending ? 'Creating...' : 'Create List'}
+              {isPending ? "Creating..." : "Create List"}
             </Button>
           </div>
         </form>

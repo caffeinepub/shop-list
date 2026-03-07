@@ -1,11 +1,23 @@
-import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Textarea } from './ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { useAddTask } from '../hooks/useAddTask';
+import { useState } from "react";
+import { useAddTask } from "../hooks/useAddTask";
+import { Button } from "./ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { Textarea } from "./ui/textarea";
 
 interface AddTaskModalProps {
   open: boolean;
@@ -13,12 +25,16 @@ interface AddTaskModalProps {
   projectId: bigint;
 }
 
-export default function AddTaskModal({ open, onOpenChange, projectId }: AddTaskModalProps) {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [deadline, setDeadline] = useState('');
-  const [type, setType] = useState('design');
-  const [assigned, setAssigned] = useState('');
+export default function AddTaskModal({
+  open,
+  onOpenChange,
+  projectId,
+}: AddTaskModalProps) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [deadline, setDeadline] = useState("");
+  const [type, setType] = useState("design");
+  const [assigned, setAssigned] = useState("");
 
   const { mutate: addTask, isPending } = useAddTask();
 
@@ -29,7 +45,7 @@ export default function AddTaskModal({ open, onOpenChange, projectId }: AddTaskM
         id: BigInt(Date.now()),
         title,
         description,
-        status: 'pending',
+        status: "pending",
         deadline,
         projectId,
         roomId: BigInt(0),
@@ -38,14 +54,14 @@ export default function AddTaskModal({ open, onOpenChange, projectId }: AddTaskM
       },
       {
         onSuccess: () => {
-          setTitle('');
-          setDescription('');
-          setDeadline('');
-          setType('design');
-          setAssigned('');
+          setTitle("");
+          setDescription("");
+          setDeadline("");
+          setType("design");
+          setAssigned("");
           onOpenChange(false);
         },
-      }
+      },
     );
   };
 
@@ -54,7 +70,9 @@ export default function AddTaskModal({ open, onOpenChange, projectId }: AddTaskM
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Add Task</DialogTitle>
-          <DialogDescription>Create a new task for this project</DialogDescription>
+          <DialogDescription>
+            Create a new task for this project
+          </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
@@ -116,11 +134,16 @@ export default function AddTaskModal({ open, onOpenChange, projectId }: AddTaskM
           </div>
 
           <div className="flex gap-3 pt-4">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="flex-1">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+              className="flex-1"
+            >
               Cancel
             </Button>
             <Button type="submit" disabled={isPending} className="flex-1">
-              {isPending ? 'Adding...' : 'Add Task'}
+              {isPending ? "Adding..." : "Add Task"}
             </Button>
           </div>
         </form>

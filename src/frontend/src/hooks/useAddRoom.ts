@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useActor } from './useActor';
-import { Product } from '../backend';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { Product } from "../backend";
+import { useActor } from "./useActor";
 
 export function useAddRoom() {
   const { actor } = useActor();
@@ -17,7 +17,7 @@ export function useAddRoom() {
       budget: bigint;
       products: Product[];
     }) => {
-      if (!actor) throw new Error('Actor not available');
+      if (!actor) throw new Error("Actor not available");
       return actor.addRoom(
         params.projectId,
         params.id,
@@ -26,12 +26,14 @@ export function useAddRoom() {
         params.notes,
         params.category,
         params.budget,
-        params.products
+        params.products,
       );
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['project', variables.projectId.toString()] });
-      queryClient.invalidateQueries({ queryKey: ['myProjects'] });
+      queryClient.invalidateQueries({
+        queryKey: ["project", variables.projectId.toString()],
+      });
+      queryClient.invalidateQueries({ queryKey: ["myProjects"] });
     },
   });
 }

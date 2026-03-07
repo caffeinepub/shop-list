@@ -1,20 +1,29 @@
-import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { useAddProject } from '../hooks/useAddProject';
+import { useState } from "react";
+import { useAddProject } from "../hooks/useAddProject";
+import { Button } from "./ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
 
 interface CreateProjectModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export default function CreateProjectModal({ open, onOpenChange }: CreateProjectModalProps) {
-  const [name, setName] = useState('');
-  const [clientId, setClientId] = useState('');
-  const [timeline, setTimeline] = useState('');
-  const [budget, setBudget] = useState('');
+export default function CreateProjectModal({
+  open,
+  onOpenChange,
+}: CreateProjectModalProps) {
+  const [name, setName] = useState("");
+  const [clientId, setClientId] = useState("");
+  const [timeline, setTimeline] = useState("");
+  const [budget, setBudget] = useState("");
 
   const { mutate: addProject, isPending } = useAddProject();
 
@@ -24,21 +33,21 @@ export default function CreateProjectModal({ open, onOpenChange }: CreateProject
       {
         id: BigInt(Date.now()),
         name,
-        clientId: BigInt(clientId || '0'),
+        clientId: BigInt(clientId || "0"),
         timeline,
-        budget: BigInt(budget || '0'),
-        status: 'Planning',
+        budget: BigInt(budget || "0"),
+        status: "Planning",
         rooms: [],
       },
       {
         onSuccess: () => {
-          setName('');
-          setClientId('');
-          setTimeline('');
-          setBudget('');
+          setName("");
+          setClientId("");
+          setTimeline("");
+          setBudget("");
           onOpenChange(false);
         },
-      }
+      },
     );
   };
 
@@ -47,7 +56,9 @@ export default function CreateProjectModal({ open, onOpenChange }: CreateProject
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Create New Project</DialogTitle>
-          <DialogDescription>Add a new interior design project to your workspace</DialogDescription>
+          <DialogDescription>
+            Add a new interior design project to your workspace
+          </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
@@ -94,11 +105,16 @@ export default function CreateProjectModal({ open, onOpenChange }: CreateProject
           </div>
 
           <div className="flex gap-3 pt-4">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="flex-1">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+              className="flex-1"
+            >
               Cancel
             </Button>
             <Button type="submit" disabled={isPending} className="flex-1">
-              {isPending ? 'Creating...' : 'Create Project'}
+              {isPending ? "Creating..." : "Create Project"}
             </Button>
           </div>
         </form>

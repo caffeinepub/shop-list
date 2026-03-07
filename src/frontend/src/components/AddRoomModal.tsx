@@ -1,10 +1,16 @@
-import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Textarea } from './ui/textarea';
-import { useAddRoom } from '../hooks/useAddRoom';
+import { useState } from "react";
+import { useAddRoom } from "../hooks/useAddRoom";
+import { Button } from "./ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import { Textarea } from "./ui/textarea";
 
 interface AddRoomModalProps {
   open: boolean;
@@ -12,12 +18,16 @@ interface AddRoomModalProps {
   projectId: bigint;
 }
 
-export default function AddRoomModal({ open, onOpenChange, projectId }: AddRoomModalProps) {
-  const [name, setName] = useState('');
-  const [area, setArea] = useState('');
-  const [category, setCategory] = useState('');
-  const [budget, setBudget] = useState('');
-  const [notes, setNotes] = useState('');
+export default function AddRoomModal({
+  open,
+  onOpenChange,
+  projectId,
+}: AddRoomModalProps) {
+  const [name, setName] = useState("");
+  const [area, setArea] = useState("");
+  const [category, setCategory] = useState("");
+  const [budget, setBudget] = useState("");
+  const [notes, setNotes] = useState("");
 
   const { mutate: addRoom, isPending } = useAddRoom();
 
@@ -28,22 +38,22 @@ export default function AddRoomModal({ open, onOpenChange, projectId }: AddRoomM
         projectId,
         id: BigInt(Date.now()),
         name,
-        area: BigInt(area || '0'),
+        area: BigInt(area || "0"),
         notes,
         category,
-        budget: BigInt(budget || '0'),
+        budget: BigInt(budget || "0"),
         products: [],
       },
       {
         onSuccess: () => {
-          setName('');
-          setArea('');
-          setCategory('');
-          setBudget('');
-          setNotes('');
+          setName("");
+          setArea("");
+          setCategory("");
+          setBudget("");
+          setNotes("");
           onOpenChange(false);
         },
-      }
+      },
     );
   };
 
@@ -52,7 +62,9 @@ export default function AddRoomModal({ open, onOpenChange, projectId }: AddRoomM
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Add Room</DialogTitle>
-          <DialogDescription>Add a new room to organize products and costs</DialogDescription>
+          <DialogDescription>
+            Add a new room to organize products and costs
+          </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
@@ -112,11 +124,16 @@ export default function AddRoomModal({ open, onOpenChange, projectId }: AddRoomM
           </div>
 
           <div className="flex gap-3 pt-4">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="flex-1">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+              className="flex-1"
+            >
               Cancel
             </Button>
             <Button type="submit" disabled={isPending} className="flex-1">
-              {isPending ? 'Adding...' : 'Add Room'}
+              {isPending ? "Adding..." : "Add Room"}
             </Button>
           </div>
         </form>

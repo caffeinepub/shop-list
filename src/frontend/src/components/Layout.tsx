@@ -1,118 +1,204 @@
-import { Link, useNavigate } from '@tanstack/react-router';
-import { useInternetIdentity } from '../hooks/useInternetIdentity';
-import { useGetCallerUserProfile } from '../hooks/useGetCallerUserProfile';
-import { useQueryClient } from '@tanstack/react-query';
-import { Button } from './ui/button';
-import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
-import { LayoutGrid, ShoppingCart, Users, Package, CheckSquare, Image, Truck, Menu, LogOut } from 'lucide-react';
-import { useState } from 'react';
+import { useQueryClient } from "@tanstack/react-query";
+import { Link, useLocation, useNavigate } from "@tanstack/react-router";
+import { LayoutGrid, LogOut, Menu, ShoppingCart, User } from "lucide-react";
+import { useState } from "react";
+import { useGetCallerUserProfile } from "../hooks/useGetCallerUserProfile";
+import { useInternetIdentity } from "../hooks/useInternetIdentity";
+import { Button } from "./ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+
+interface NavItem {
+  to: string;
+  label: string;
+  icon: React.ElementType;
+}
+
+const navItems: NavItem[] = [
+  { to: "/projects", label: "Projekty", icon: LayoutGrid },
+  { to: "/shopping-lists", label: "Listy zakupowe", icon: ShoppingCart },
+];
+
+function NavLink({
+  item,
+  onClick,
+  mobile,
+}: {
+  item: NavItem;
+  onClick?: () => void;
+  mobile?: boolean;
+}) {
+  const location = useLocation();
+  const isActive =
+    location.pathname === item.to ||
+    (item.to === "/projects" && location.pathname === "/");
+
+  if (mobile) {
+    return (
+      <Link
+        to={item.to}
+        onClick={onClick}
+        data-ocid={`nav.${item.to.replace("/", "").replace("-", "_") || "projects"}.link`}
+        className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
+          isActive
+            ? "bg-foreground text-background"
+            : "text-muted-foreground hover:text-foreground hover:bg-accent"
+        }`}
+      >
+        <item.icon className="w-4 h-4 shrink-0" />
+        {item.label}
+      </Link>
+    );
+  }
+
+  return (
+    <Link
+      to={item.to}
+      data-ocid={`nav.${item.to.replace("/", "").replace("-", "_") || "projects"}.link`}
+      className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+        isActive
+          ? "bg-foreground text-background"
+          : "text-muted-foreground hover:text-foreground hover:bg-accent"
+      }`}
+    >
+      {item.label}
+    </Link>
+  );
+}
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { clear, identity } = useInternetIdentity();
+  const { clear } = useInternetIdentity();
   const { data: userProfile } = useGetCallerUserProfile();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const isClient = userProfile?.role === 'client';
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleLogout = async () => {
     await clear();
     queryClient.clear();
-    navigate({ to: '/' });
+    navigate({ to: "/" });
   };
 
-  const navItems = isClient
-    ? [
-        { to: '/client-portal', label: 'My Projects', icon: LayoutGrid },
-      ]
-    : [
-        { to: '/projects', label: 'Projects', icon: LayoutGrid },
-        { to: '/clients', label: 'Clients', icon: Users },
-        { to: '/shopping-lists', label: 'Shopping Lists', icon: ShoppingCart },
-        { to: '/product-library', label: 'Product Library', icon: Package },
-        { to: '/logistics', label: 'Logistics', icon: Truck },
-      ];
+  const initials = userProfile?.name
+    ? userProfile.name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2)
+    : "?";
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
-        <div className="container flex h-16 items-center justify-between px-4">
-          <div className="flex items-center gap-6">
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center">
-                <LayoutGrid className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <span className="font-bold text-xl text-foreground">Interior Hub</span>
-            </Link>
+    <div className="min-h-screen bg-background flex flex-col">
+      {/* Header */}
+      <header className="no-print sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+          {/* Logo */}
+          <Link
+            to="/"
+            data-ocid="nav.home.link"
+            className="flex items-center gap-2 shrink-0"
+          >
+            <div className="w-6 h-6 bg-foreground rounded-sm flex items-center justify-center">
+              <span className="text-background text-xs font-bold font-display">
+                S
+              </span>
+            </div>
+            <span className="font-bold text-base font-display tracking-tight text-foreground">
+              Shop List
+            </span>
+          </Link>
 
-            <nav className="hidden md:flex items-center gap-1">
-              {navItems.map((item) => (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors"
-                  activeProps={{ className: 'text-foreground bg-accent' }}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-1 flex-1 ml-6">
+            {navItems.map((item) => (
+              <NavLink key={item.to} item={item} />
+            ))}
+          </nav>
 
-          <div className="flex items-center gap-4">
+          {/* Right side */}
+          <div className="flex items-center gap-2">
             {userProfile && (
-              <div className="hidden sm:flex items-center gap-2 text-sm">
-                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                  <span className="text-primary font-medium">{userProfile.name.charAt(0).toUpperCase()}</span>
+              <div className="hidden sm:flex items-center gap-2">
+                <div className="w-7 h-7 rounded-full bg-muted border border-border flex items-center justify-center">
+                  <span className="text-foreground text-xs font-semibold font-display">
+                    {initials}
+                  </span>
                 </div>
-                <span className="text-foreground font-medium">{userProfile.name}</span>
+                <span className="text-sm text-foreground font-medium hidden lg:block">
+                  {userProfile.name}
+                </span>
               </div>
             )}
 
-            <Button variant="ghost" size="sm" onClick={handleLogout} className="hidden sm:flex">
-              <LogOut className="w-4 h-4 mr-2" />
-              Logout
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleLogout}
+              data-ocid="nav.logout.button"
+              className="hidden sm:flex text-muted-foreground hover:text-foreground h-8 px-2"
+            >
+              <LogOut className="w-3.5 h-3.5 mr-1.5" />
+              <span className="text-xs">Wyloguj</span>
             </Button>
 
-            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            {/* Mobile menu */}
+            <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden">
-                  <Menu className="w-5 h-5" />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="md:hidden h-8 w-8"
+                  data-ocid="nav.mobile_menu.button"
+                >
+                  <Menu className="w-4 h-4" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-64">
-                <div className="flex flex-col gap-4 mt-8">
+              <SheetContent side="right" className="w-64 p-6">
+                <div className="flex flex-col gap-6">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 bg-foreground rounded-sm flex items-center justify-center">
+                      <span className="text-background text-xs font-bold">
+                        S
+                      </span>
+                    </div>
+                    <span className="font-bold font-display">Shop List</span>
+                  </div>
+
                   {userProfile && (
                     <div className="flex items-center gap-3 pb-4 border-b border-border">
-                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                        <span className="text-primary font-medium text-lg">{userProfile.name.charAt(0).toUpperCase()}</span>
+                      <div className="w-9 h-9 rounded-full bg-muted border border-border flex items-center justify-center">
+                        <User className="w-4 h-4 text-muted-foreground" />
                       </div>
-                      <div>
-                        <p className="font-medium text-foreground">{userProfile.name}</p>
-                        <p className="text-xs text-muted-foreground capitalize">{userProfile.role}</p>
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium text-foreground truncate">
+                          {userProfile.name}
+                        </p>
+                        <p className="text-xs text-muted-foreground capitalize">
+                          {userProfile.role}
+                        </p>
                       </div>
                     </div>
                   )}
 
                   <nav className="flex flex-col gap-1">
                     {navItems.map((item) => (
-                      <Link
+                      <NavLink
                         key={item.to}
-                        to={item.to}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors"
-                        activeProps={{ className: 'text-foreground bg-accent' }}
-                      >
-                        <item.icon className="w-4 h-4" />
-                        {item.label}
-                      </Link>
+                        item={item}
+                        mobile
+                        onClick={() => setMobileOpen(false)}
+                      />
                     ))}
                   </nav>
 
-                  <Button variant="outline" onClick={handleLogout} className="mt-4">
-                    <LogOut className="w-4 h-4 mr-2" />
-                    Logout
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleLogout}
+                    className="mt-auto"
+                  >
+                    <LogOut className="w-3.5 h-3.5 mr-2" />
+                    Wyloguj
                   </Button>
                 </div>
               </SheetContent>
@@ -121,24 +207,25 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">{children}</main>
+      {/* Main */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
+        {children}
+      </main>
 
-      <footer className="border-t border-border bg-card mt-16">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-            <p>© {new Date().getFullYear()} Interior Hub. All rights reserved.</p>
-            <p>
-              Built with ❤️ using{' '}
-              <a
-                href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-foreground hover:underline"
-              >
-                caffeine.ai
-              </a>
-            </p>
-          </div>
+      {/* Footer */}
+      <footer className="no-print border-t border-border bg-card mt-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
+          <span>© {new Date().getFullYear()} Shop List</span>
+          <a
+            href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(
+              window.location.hostname,
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-foreground transition-colors"
+          >
+            Zbudowano z ❤️ używając caffeine.ai
+          </a>
         </div>
       </footer>
     </div>
